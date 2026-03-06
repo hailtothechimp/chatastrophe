@@ -64,21 +64,22 @@ ADMIN_USERS=alice
 
 Comma-separate multiple usernames: `ADMIN_USERS=alice,bob`. The promotion happens automatically when the backend starts.
 
-### 5. Start the backend
-
-```bash
-uvicorn main:app --reload
-```
-
-### 6. Install and start the frontend
-
-In a separate terminal:
+### 5. Install frontend dependencies
 
 ```bash
 cd frontend
 npm install
-npm run dev
 ```
+
+### 6. Start the app
+
+From the root of the project, run:
+
+```powershell
+.\start.ps1
+```
+
+This opens both the backend and frontend in separate terminal windows.
 
 ### 7. Open the app
 
