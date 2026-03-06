@@ -49,10 +49,10 @@ pip install -r requirements.txt
 ### 4. Create a user
 
 ```bash
-python create_user.py
+python create_user.py <username> <password>
 ```
 
-Follow the prompts to set a username and password.
+For example: `python create_user.py alice mypassword123`
 
 ### 5. Start the backend
 
