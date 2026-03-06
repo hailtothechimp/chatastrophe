@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatastrophe — User Manual</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --indigo: #4f46e5;
+      --indigo-light: #6366f1;
+      --violet: #7c3aed;
+      --orange: #f97316;
+      --amber: #f59e0b;
+      --emerald: #059669;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --sidebar-width: 260px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--slate-800);
+      background: white;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════════════ */
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar nav ── */
+    .nav {
+      width: var(--sidebar-width);
+      background: var(--slate-900);
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+
+    .nav-header {
+      padding: 24px 20px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .nav-flame {
+      width: 22px;
+      height: 22px;
+      color: #fb923c;
+    }
+
+    .nav-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-subtitle {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      margin-left: 32px;
+    }
+
+    .nav-section {
+      padding: 16px 0 8px;
+    }
+
+    .nav-section-label {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.25);
+      padding: 0 20px;
+      margin-bottom: 4px;
+    }
+
+    .nav a {
+      display: block;
+      padding: 6px 20px;
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.15s, background 0.15s;
+      border-radius: 0;
+    }
+
+    .nav a:hover {
+      color: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .nav a.active {
+      color: #a5b4fc;
+      background: rgba(99,102,241,0.12);
+      border-left: 2px solid #6366f1;
+    }
+
+    .nav a .num {
+      color: rgba(255,255,255,0.2);
+      margin-right: 6px;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Main content ── */
+    .content {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* ═══════════════════════════════════════════════
+       COVER
+    ═══════════════════════════════════════════════ */
+
+    .cover {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 45%, #312e81 75%, #4c1d95 100%);
+      padding: 80px 80px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 30%, rgba(99,102,241,0.25) 0%, transparent 60%);
+    }
+
+    .cover-inner { position: relative; z-index: 1; max-width: 700px; }
+
+    .cover-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+    }
+
+    .cover-logo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .cover-flame {
+      width: 48px;
+      height: 48px;
+      color: #fb923c;
+      filter: drop-shadow(0 0 16px rgba(249,115,22,0.4));
+    }
+
+    .cover h1 {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -2.5px;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, #fb923c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cover-sub {
+      font-size: 20px;
+      color: rgba(255,255,255,0.6);
+      margin: 16px 0 32px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 24px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .cover-meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* ═══════════════════════════════════════════════
+       SECTIONS
+    ═══════════════════════════════════════════════ */
+
+    .section {
+      padding: 64px 80px;
+      border-bottom: 1px solid var(--slate-100);
+      max-width: 900px;
+    }
+
+    .section:last-child { border-bottom: none; }
+
+    .section-anchor { scroll-margin-top: 24px; }
+
+    /* Section header */
+    .section-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--indigo);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 2px;
+      background: var(--indigo);
+    }
+
+    h2.section-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      color: var(--slate-900);
+      margin-bottom: 16px;
+    }
+
+    .section-lead {
+      font-size: 16px;
+      color: var(--slate-500);
+      line-height: 1.75;
+      margin-bottom: 40px;
+      max-width: 640px;
+    }
+
+    /* Sub-headings */
+    h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin: 40px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3:first-child { margin-top: 0; }
+
+    h3 .anchor-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--indigo);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--slate-700);
+      margin: 24px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    p { margin-bottom: 16px; color: var(--slate-700); }
+    p:last-child { margin-bottom: 0; }
+
+    strong { font-weight: 600; color: var(--slate-900); }
+
+    /* ═══════════════════════════════════════════════
+       TABLE OF CONTENTS
+    ═══════════════════════════════════════════════ */
+
+    .toc {
+      padding: 48px 80px;
+      background: var(--slate-50);
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .toc h2 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--slate-500);
+      margin-bottom: 24px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px 32px;
+    }
+
+    .toc-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 5px 0;
+      text-decoration: none;
+      color: var(--slate-600);
+      font-size: 13.5px;
+      transition: color 0.15s;
+      border-bottom: 1px dotted var(--slate-200);
+    }
+
+    .toc-item:hover { color: var(--indigo); }
+
+    .toc-num {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--slate-400);
+      flex-shrink: 0;
+      width: 20px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       CALLOUTS
+    ═══════════════════════════════════════════════ */
+
+    .callout {
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { flex: 1; }
+    .callout-body p { margin: 0; font-size: 13.5px; line-height: 1.6; }
+    .callout-body strong { font-size: 13.5px; }
+
+    .callout.tip { background: #eef2ff; border: 1px solid #c7d2fe; }
+    .callout.tip .callout-body p, .callout.tip .callout-body strong { color: #3730a3; }
+
+    .callout.note { background: #f0f9ff; border: 1px solid #bae6fd; }
+    .callout.note .callout-body p, .callout.note .callout-body strong { color: #0c4a6e; }
+
+    .callout.warning { background: #fffbeb; border: 1px solid #fde68a; }
+    .callout.warning .callout-body p, .callout.warning .callout-body strong { color: #78350f; }
+
+    .callout.fun { background: #f5f3ff; border: 1px solid #ddd6fe; }
+    .callout.fun .callout-body p, .callout.fun .callout-body strong { color: #4c1d95; }
+
+    /* ═══════════════════════════════════════════════
+       MOCK SCREENSHOTS
+    ═══════════════════════════════════════════════ */
+
+    .screenshot {
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 28px 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      background: white;
+    }
+
+    .screenshot-caption {
+      font-size: 12px;
+      color: var(--slate-400);
+      text-align: center;
+      padding: 8px 0 4px;
+      font-style: italic;
+    }
+
+    /* App chrome */
+    .app-chrome {
+      display: flex;
+      height: 380px;
+      font-size: 11px;
+    }
+
+    /* Sidebar mock */
+    .mock-sidebar {
+      width: 220px;
+      background: #0f172a;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mock-sidebar-header {
+      padding: 10px 12px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .mock-sidebar-controls {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .mock-select {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      height: 24px;
+      margin-bottom: 5px;
+    }
+
+    .mock-sidebar-list {
+      flex: 1;
+      padding: 6px;
+      overflow: hidden;
+    }
+
+    .mock-conv-item {
+      padding: 7px 8px;
+      border-radius: 6px;
+      margin-bottom: 3px;
+      cursor: pointer;
+    }
+
+    .mock-conv-item.active { background: rgba(99,102,241,0.2); }
+    .mock-conv-item:not(.active) { background: rgba(255,255,255,0.03); }
+
+    .mock-conv-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mock-conv-meta {
+      font-size: 9.5px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .mock-conv-persona {
+      font-size: 9.5px;
+      color: #818cf8;
+      margin-top: 1px;
+    }
+
+    /* Main area mock */
+    .mock-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mock-topbar {
+      height: 36px;
+      background: white;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .mock-tab {
+      height: 24px;
+      padding: 0 10px;
+      border-radius: 6px;
+      font-size: 10.5px;
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .mock-tab.active { background: #eef2ff; color: #4338ca; }
+    .mock-tab:not(.active) { color: var(--slate-500); }
+
+    .mock-messages {
+      flex: 1;
+      padding: 12px;
+      background: #fafafa;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mock-msg {
+      max-width: 75%;
+      border-radius: 10px;
+      padding: 8px 12px;
+    }
+
+    .mock-msg.user {
+      background: #4f46e5;
+      color: white;
+      align-self: flex-end;
+      font-size: 11px;
+    }
+
+    .mock-msg.assistant {
+      background: white;
+      border: 1px solid var(--slate-200);
+      color: var(--slate-700);
+      align-self: flex-start;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .mock-inputbar {
+      padding: 8px 12px 10px;
+      background: white;
+      border-top: 1px solid var(--slate-100);
+      flex-shrink: 0;
+    }
+
+    .mock-input-options {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 9.5px;
+      color: var(--slate-400);
+    }
+
+    .mock-textarea {
+      border: 2px solid var(--slate-300);
+      border-radius: 12px;
+      padding: 7px 10px;
+      font-size: 11px;
+      color: var(--slate-400);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mock-send-btn {
+      width: 26px;
+      height: 26px;
+      background: #4f46e5;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    /* Parameter panel mock */
+    .mock-params {
+      width: 180px;
+      background: var(--slate-50);
+      border-left: 1px solid var(--slate-200);
+      flex-shrink: 0;
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .mock-params-title {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--slate-500);
+      margin-bottom: 12px;
+    }
+
+    .mock-param-group {
+      margin-bottom: 12px;
+    }
+
+    .mock-param-group-label {
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6366f1;
+      margin-bottom: 6px;
+    }
+
+    .mock-slider-row {
+      margin-bottom: 8px;
+    }
+
+    .mock-slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      color: var(--slate-600);
+      margin-bottom: 3px;
+    }
+
+    .mock-slider-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: #4f46e5;
+      background: #eef2ff;
+      padding: 0 4px;
+      border-radius: 3px;
+    }
+
+    .mock-slider-track {
+      height: 4px;
+      background: var(--slate-200);
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .mock-slider-fill {
+      height: 100%;
+      background: #4f46e5;
+      border-radius: 2px;
+    }
+
+    /* Arena mock layout */
+    .mock-arena {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .mock-arena-col {
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .mock-arena-col:first-child { border-right: 1px solid var(--slate-200); }
+
+    .mock-arena-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--slate-100);
+    }
+
+    .mock-model-pill {
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+
+    .mock-model-pill.indigo { background: #eef2ff; color: #4338ca; }
+    .mock-model-pill.violet { background: #f5f3ff; color: #5b21b6; }
+
+    /* Roundtable mock */
+    .mock-agent-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 10px;
+    }
+
+    .mock-agent-card {
+      border-radius: 8px;
+      padding: 8px;
+      border: 1px solid;
+    }
+
+    .mock-agent-card.indigo { background: #eef2ff; border-color: #c7d2fe; }
+    .mock-agent-card.violet { background: #f5f3ff; border-color: #ddd6fe; }
+    .mock-agent-card.emerald { background: #ecfdf5; border-color: #a7f3d0; }
+    .mock-agent-card.amber { background: #fffbeb; border-color: #fde68a; }
+
+    .mock-agent-name { font-size: 9.5px; font-weight: 700; color: var(--slate-700); margin-bottom: 4px; }
+    .mock-agent-model { font-size: 8.5px; color: var(--slate-400); }
+
+    /* Throwdown scoreboard */
+    .mock-scoreboard {
+      background: var(--slate-50);
+      border-bottom: 1px solid var(--slate-200);
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mock-score-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .mock-score-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .mock-score-name { font-size: 10px; font-weight: 600; }
+    .mock-score-num { font-size: 11px; font-weight: 800; }
+
+    /* ═══════════════════════════════════════════════
+       LISTS
+    ═══════════════════════════════════════════════ */
+
+    ul, ol {
+      padding-left: 0;
+      margin: 12px 0 20px;
+    }
+
+    ul li, ol li {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 14.5px;
+      color: var(--slate-700);
+      line-height: 1.65;
+      align-items: flex-start;
+    }
+
+    ul li::before {
+      content: '→';
+      color: var(--indigo);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    ol { counter-reset: item; }
+    ol li { counter-increment: item; }
+    ol li::before {
+      content: counter(item) '.';
+      color: var(--indigo);
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      min-width: 18px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       PARAM REFERENCE TABLE
+    ═══════════════════════════════════════════════ */
+
+    .param-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13.5px;
+    }
+
+    .param-table th {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--slate-500);
+    }
+
+    .param-table td {
+      border: 1px solid var(--slate-200);
+      padding: 10px 14px;
+      vertical-align: top;
+      color: var(--slate-700);
+      line-height: 1.55;
+    }
+
+    .param-table tr:nth-child(even) td { background: var(--slate-50); }
+
+    .param-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--indigo);
+      white-space: nowrap;
+    }
+
+    .provider-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+
+    .badge-all { background: #ecfdf5; color: #065f46; }
+    .badge-oai { background: #eef2ff; color: #3730a3; }
+    .badge-ant { background: #fdf4ff; color: #6b21a8; }
+
+    /* ═══════════════════════════════════════════════
+       CODE / KEYBOARD
+    ═══════════════════════════════════════════════ */
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      background: var(--slate-100);
+      color: var(--indigo);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: white;
+      border: 1px solid var(--slate-300);
+      border-bottom: 2px solid var(--slate-300);
+      border-radius: 5px;
+      padding: 1px 7px;
+      color: var(--slate-700);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    /* ═══════════════════════════════════════════════
+       STEP BOXES
+    ═══════════════════════════════════════════════ */
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--indigo), var(--violet));
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-content { flex: 1; }
+    .step-content strong { display: block; font-size: 14px; margin-bottom: 4px; }
+    .step-content p { margin: 0; font-size: 13.5px; color: var(--slate-600); }
+
+    /* ═══════════════════════════════════════════════
+       FEATURE CHIPS
+    ═══════════════════════════════════════════════ */
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid;
+    }
+
+    .chip.indigo { background: #eef2ff; border-color: #c7d2fe; color: #4338ca; }
+    .chip.violet { background: #f5f3ff; border-color: #ddd6fe; color: #5b21b6; }
+    .chip.emerald { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
+    .chip.amber { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+    .chip.orange { background: #fff7ed; border-color: #fed7aa; color: #9a3412; }
+    .chip.slate { background: var(--slate-100); border-color: var(--slate-200); color: var(--slate-600); }
+
+    /* ═══════════════════════════════════════════════
+       PRINT
+    ═══════════════════════════════════════════════ */
+
+    @media print {
+      .nav { display: none; }
+      .content { margin-left: 0; }
+      .section { padding: 40px 60px; }
+      @page { margin: 20mm; }
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+<!-- ═══════════════════════════════════════════════
+     SIDEBAR NAV
+═══════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-header">
+    <div class="nav-brand">
+      <svg class="nav-flame" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C12 2 8 6 8 10c0 1.5.5 2.9 1.4 4C8.5 13.1 8 11.6 8 10c0 0-4 3-4 7a8 8 0 0 0 16 0c0-5-4-9-4-9s0 3-2 4c0 0 2-6-2-10z"/>
+      </svg>
+      <span class="nav-title">Chatastrophe</span>
+    </div>
+    <div class="nav-subtitle">User Manual</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Getting Started</div>
+    <a href="#intro"><span class="num">01</span> Introduction</a>
+    <a href="#interface"><span class="num">02</span> Interface Overview</a>
+    <a href="#first-chat"><span class="num">03</span> Your First Chat</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Core UI</div>
+    <a href="#sidebar"><span class="num">04</span> Conversation Sidebar</a>
+    <a href="#params-panel"><span class="num">05</span> Parameter Panel</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Tabs</div>
+    <a href="#chat"><span class="num">06</span> Chat</a>
+    <a href="#sweep"><span class="num">07</span> Parameter Sweep</a>
+    <a href="#reasoning"><span class="num">08</span> Reasoning Models</a>
+    <a href="#arena"><span class="num">09</span> Arena</a>
+    <a href="#roundtable"><span class="num">10</span> Roundtable</a>
+    <a href="#throwdown"><span class="num">11</span> Throwdown</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Content</div>
+    <a href="#personas"><span class="num">12</span> Personas</a>
+    <a href="#questions"><span class="num">13</span> Question Bank</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Reference</div>
+    <a href="#params-ref"><span class="num">14</span> Parameters Reference</a>
+    <a href="#providers"><span class="num">15</span> Providers &amp; Models</a>
+    <a href="#tips"><span class="num">16</span> Power User Tips</a>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════════ -->
+<main class="content">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">User Manual — Complete Edition</div>
+    <div class="cover-logo">
+      <svg class="cover-flame" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C12 2 8 6 8 10c0 1.5.5 2.9 1.4 4C8.5 13.1 8 11.6 8 10c0 0-4 3-4 7a8 8 0 0 0 16 0c0-5-4-9-4-9s0 3-2 4c0 0 2-6-2-10z"/>
+      </svg>
+      <h1>Chatastrophe</h1>
+    </div>
+    <p class="cover-sub">Everything you need to know about the multi-model playground for people who want to push AI past its polite defaults.</p>
+    <div class="cover-meta">
+      <span>📖 16 Sections</span>
+      <span>🔥 6 Tabs Covered</span>
+      <span>⚡ 309 Built-in Questions</span>
+      <span>🤖 4 AI Providers</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <div class="toc-grid">
+    <a href="#intro" class="toc-item"><span class="toc-num">01</span>Introduction</a>
+    <a href="#chat" class="toc-item"><span class="toc-num">06</span>Chat Tab</a>
+    <a href="#personas" class="toc-item"><span class="toc-num">12</span>Personas</a>
+    <a href="#interface" class="toc-item"><span class="toc-num">02</span>Interface Overview</a>
+    <a href="#sweep" class="toc-item"><span class="toc-num">07</span>Parameter Sweep</a>
+    <a href="#questions" class="toc-item"><span class="toc-num">13</span>Question Bank</a>
+    <a href="#first-chat" class="toc-item"><span class="toc-num">03</span>Your First Chat</a>
+    <a href="#reasoning" class="toc-item"><span class="toc-num">08</span>Reasoning Models</a>
+    <a href="#params-ref" class="toc-item"><span class="toc-num">14</span>Parameters Reference</a>
+    <a href="#sidebar" class="toc-item"><span class="toc-num">04</span>Conversation Sidebar</a>
+    <a href="#arena" class="toc-item"><span class="toc-num">09</span>Arena</a>
+    <a href="#providers" class="toc-item"><span class="toc-num">15</span>Providers &amp; Models</a>
+    <a href="#params-panel" class="toc-item"><span class="toc-num">05</span>Parameter Panel</a>
+    <a href="#roundtable" class="toc-item"><span class="toc-num">10</span>Roundtable</a>
+    <a href="#tips" class="toc-item"><span class="toc-num">16</span>Power User Tips</a>
+    <span class="toc-item" style="opacity:0"></span>
+    <a href="#throwdown" class="toc-item"><span class="toc-num">11</span>Throwdown</a>
+    <span class="toc-item" style="opacity:0"></span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     01 — INTRODUCTION
+═══════════════════════════════════════════════ -->
+<div id="intro" class="section section-anchor">
+  <div class="section-eyebrow">01 — Introduction</div>
+  <h2 class="section-title">Welcome to Chatastrophe</h2>
+  <p class="section-lead">A local LLM playground with six purpose-built modes, four AI providers, and an unhealthy obsession with making models compete against each other.</p>
+
+  <p>Chatastrophe started life as a sampling parameter explorer and evolved into something considerably more interesting. At its core it's a browser-based application that runs entirely on your machine, storing all conversations and personas in a local SQLite database. Nothing leaves your environment unless you're making API calls to the cloud providers you've configured.</p>
+
+  <p>The app is organized into six <strong>tabs</strong>, each designed for a different kind of experiment:</p>
+
+  <div class="chip-row">
+    <span class="chip indigo">🗨️ Chat</span>
+    <span class="chip violet">📊 Parameter Sweep</span>
+    <span class="chip slate">🧠 Reasoning Models</span>
+    <span class="chip emerald">⚔️ Arena</span>
+    <span class="chip orange">🪑 Roundtable</span>
+    <span class="chip amber">🏆 Throwdown</span>
+  </div>
+
+  <p>Whether you're a researcher running systematic experiments, a developer benchmarking model choices, or just someone who wants to watch Sherlock Holmes and Hamlet debate the trolley problem — you're in the right place.</p>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body"><p><strong>Before you start:</strong> Make sure the backend server is running (<code>uvicorn main:app --reload</code> from the <code>backend/</code> directory) and the frontend dev server is active (<code>npm run dev</code> from <code>frontend/</code>). The app runs at <code>http://localhost:5173</code> by default.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     02 — INTERFACE OVERVIEW
+═══════════════════════════════════════════════ -->
+<div id="interface" class="section section-anchor">
+  <div class="section-eyebrow">02 — Interface Overview</div>
+  <h2 class="section-title">The Interface at a Glance</h2>
+  <p class="section-lead">Three zones. Six tabs. One flame icon. Here's what you're looking at.</p>
+
+  <!-- Full layout screenshot -->
+  <div class="screenshot">
+    <div class="app-chrome">
+      <!-- Sidebar -->
+      <div class="mock-sidebar">
+        <div class="mock-sidebar-header">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+            <div style="width:14px;height:14px;color:#fb923c;font-size:14px;">🔥</div>
+            <span style="font-size:12px;font-weight:800;color:white;">Chatastrophe</span>
+          </div>
+          <div style="display:flex;gap:4px;">
+            <div style="flex:1;background:rgba(99,102,241,0.4);border:1px solid rgba(99,102,241,0.6);height:22px;border-radius:6px;display:flex;align-items:center;padding:0 8px;">
+              <span style="font-size:9.5px;color:#a5b4fc;font-weight:600;">+ New Chat</span>
+            </div>
+          </div>
+        </div>
+        <div class="mock-sidebar-controls">
+          <div class="mock-select"></div>
+          <div class="mock-select"></div>
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;height:50px;margin-bottom:5px;"></div>
+          <div style="height:18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:4px;"></div>
+        </div>
+        <div class="mock-sidebar-list">
+          <div class="mock-conv-item active">
+            <div class="mock-conv-title">The nature of consciousness</div>
+            <div class="mock-conv-meta">llama-3.3-70b · Groq</div>
+            <div class="mock-conv-persona">Nietzsche</div>
+          </div>
+          <div class="mock-conv-item">
+            <div class="mock-conv-title">Write a haiku about entropy</div>
+            <div class="mock-conv-meta">gpt-4o · OpenAI</div>
+          </div>
+          <div class="mock-conv-item">
+            <div class="mock-conv-title">Best sorting algorithm?</div>
+            <div class="mock-conv-meta">claude-sonnet · Anthropic</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main area -->
+      <div class="mock-main">
+        <div class="mock-topbar">
+          <div style="width:14px;height:14px;color:#fb923c;font-size:13px;">🔥</div>
+          <span style="font-size:11px;font-weight:700;color:#1e293b;margin-right:8px;">Chatastrophe</span>
+          <div class="mock-tab active">Chat</div>
+          <div class="mock-tab">Parameter Sweep</div>
+          <div class="mock-tab">Reasoning Models</div>
+          <div class="mock-tab">Arena</div>
+          <div class="mock-tab">Roundtable</div>
+          <div class="mock-tab">Throwdown</div>
+          <div style="flex:1"></div>
+          <div style="width:22px;height:22px;background:var(--slate-100);border-radius:5px;"></div>
+        </div>
+        <div class="mock-messages">
+          <div class="mock-msg user">What is the will to power?</div>
+          <div class="mock-msg assistant" style="max-width:85%">Ah, you ask about my most fundamental concept! The will to power is not merely about domination over others — that would be a vulgar misreading. It is the drive toward growth, self-mastery, and the creative overcoming of limitations…</div>
+        </div>
+        <div class="mock-inputbar">
+          <div class="mock-input-options">
+            <span>✨ Question ideas</span>
+            <span style="flex:1"></span>
+            <span>⚡ Runs: 1</span>
+          </div>
+          <div class="mock-textarea">
+            <span style="font-size:10.5px;color:var(--slate-400)">Ask anything…</span>
+            <div class="mock-send-btn"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Params panel -->
+      <div class="mock-params">
+        <div class="mock-params-title">Sampling Parameters</div>
+        <div class="mock-param-group">
+          <div class="mock-param-group-label">Sampling</div>
+          <div class="mock-slider-row">
+            <div class="mock-slider-label"><span>Temperature</span><span class="mock-slider-val">0.70</span></div>
+            <div class="mock-slider-track"><div class="mock-slider-fill" style="width:35%"></div></div>
+          </div>
+          <div class="mock-slider-row">
+            <div class="mock-slider-label"><span>Top P</span><span class="mock-slider-val">1.00</span></div>
+            <div class="mock-slider-track"><div class="mock-slider-fill" style="width:100%"></div></div>
+          </div>
+        </div>
+        <div class="mock-param-group">
+          <div class="mock-param-group-label">Output</div>
+          <div class="mock-slider-row">
+            <div class="mock-slider-label"><span>Max Tokens</span><span class="mock-slider-val">1024</span></div>
+            <div class="mock-slider-track"><div class="mock-slider-fill" style="width:25%"></div></div>
+          </div>
+        </div>
+        <div class="mock-param-group">
+          <div class="mock-param-group-label">Repetition</div>
+          <div class="mock-slider-row">
+            <div class="mock-slider-label"><span>Freq Penalty</span><span class="mock-slider-val">0.00</span></div>
+            <div class="mock-slider-track"><div class="mock-slider-fill" style="width:50%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot-caption">The main interface: Conversation Sidebar (left) · Tab content (center) · Parameter Panel (right)</div>
+  </div>
+
+  <h3><span class="anchor-dot"></span>Three Zones</h3>
+
+  <p><strong>Left: Conversation Sidebar.</strong> This is where your chat history lives, along with provider/model selection, system prompt editing, and persona assignment. It's drag-resizable from 160 to 400px wide. See <a href="#sidebar">Section 04</a> for full details.</p>
+
+  <p><strong>Center: Tab Content.</strong> The main workspace. The tab bar at the top lets you switch between the six modes. Each tab is completely independent — switching tabs doesn't disrupt anything in progress.</p>
+
+  <p><strong>Right: Parameter Panel.</strong> The sampling parameter controls. The gear icon (⚙️) in the top-right of the header toggles this panel open/closed. Parameters changed here apply to all subsequent messages in the active conversation. See <a href="#params-panel">Section 05</a>.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     03 — FIRST CHAT
+═══════════════════════════════════════════════ -->
+<div id="first-chat" class="section section-anchor">
+  <div class="section-eyebrow">03 — Getting Started</div>
+  <h2 class="section-title">Your First Conversation</h2>
+  <p class="section-lead">From cold start to first response in four steps.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Pick a provider and model</strong>
+        <p>In the left sidebar, use the provider dropdown (defaults to <em>Groq (free cloud)</em>) and model dropdown below it. Groq requires an API key in your <code>.env</code> file but it's free and fast — a good starting point.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Create a new conversation</strong>
+        <p>Click <strong>+ New Chat</strong> in the sidebar, or just start typing in the input bar — a conversation will be created automatically on first send.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Type a message and send</strong>
+        <p>Press <kbd>Enter</kbd> to send. Use <kbd>Shift</kbd>+<kbd>Enter</kbd> for a newline. The response streams in token by token. You can click <strong>Stop</strong> mid-stream if it's going off the rails.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <strong>Experiment with parameters</strong>
+        <p>Slide the Temperature up in the right panel and ask the same question again. Notice how the response changes? That's the whole game. Welcome to Chatastrophe.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout fun">
+    <span class="callout-icon">🎲</span>
+    <div class="callout-body"><p><strong>Not sure what to ask?</strong> Click <strong>✨ Question ideas</strong> above the input bar. The question bank has 309 curated prompts across 8 categories, specifically chosen to produce interesting, opinionated AI responses. "Would you rather fight one horse-sized duck or a hundred duck-sized horses?" is in there. So is "What ethical framework is most compatible with utilitarianism?" You're covered.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     04 — CONVERSATION SIDEBAR
+═══════════════════════════════════════════════ -->
+<div id="sidebar" class="section section-anchor">
+  <div class="section-eyebrow">04 — Core UI</div>
+  <h2 class="section-title">The Conversation Sidebar</h2>
+  <p class="section-lead">Your conversation history, model controls, and persona setup — all in the left panel.</p>
+
+  <h3><span class="anchor-dot"></span>Resizing the Sidebar</h3>
+  <p>Drag the right edge of the sidebar to resize it. The width clamps between 160px (minimal) and 400px (full). Your preferred width persists while the app is open.</p>
+
+  <h3><span class="anchor-dot"></span>Provider & Model Selection</h3>
+  <p>The provider dropdown lists all configured providers. Switching provider resets the model dropdown to that provider's first available model. The selected provider and model are stored with each conversation — so loading an old conversation restores the original settings.</p>
+
+  <div class="callout note">
+    <span class="callout-icon">ℹ️</span>
+    <div class="callout-body"><p>Provider and model changes made in the sidebar apply to the currently active conversation and all future messages in it. They don't retroactively change the model used for earlier messages.</p></div>
+  </div>
+
+  <h3><span class="anchor-dot"></span>System Prompt</h3>
+  <p>The system prompt textarea below the model selector sets the AI's behavior and persona for the entire conversation. This is where you define who the model is, how it speaks, and what constraints it operates under. You can type directly, or use the persona picker below it to auto-fill from your saved personas.</p>
+
+  <h3><span class="anchor-dot"></span>Persona Picker</h3>
+  <p>The labeled dropdown below the system prompt textarea lists all saved personas. Selecting one fills the system prompt automatically. The dropdown resets after selection (it's a "pick one" control, not a persistent selection) so you can change your mind without manually clearing things.</p>
+
+  <p>When a conversation uses a recognized persona's system prompt, the persona name appears in indigo below the model name in the conversation list — handy for quickly scanning which character was in use.</p>
+
+  <h3><span class="anchor-dot"></span>Conversation List</h3>
+  <p>Conversations are listed in the order they were created. Each entry shows:</p>
+  <ul>
+    <li>The conversation title (auto-generated from the first message)</li>
+    <li>The model and provider in small gray text</li>
+    <li>The persona name in indigo, if the system prompt matches a saved persona</li>
+  </ul>
+  <p>Click a conversation to load it. The active conversation is highlighted. Hover to reveal a <strong>delete</strong> (trash) button. Deleted conversations are gone permanently — there's no undo.</p>
+
+  <h3><span class="anchor-dot"></span>Exporting Conversations</h3>
+  <p>With a conversation active, the bottom of the sidebar shows export buttons:</p>
+  <ul>
+    <li><strong>JSON</strong> — the full conversation as a structured JSON file, including all messages, parameters, and metadata</li>
+    <li><strong>PDF</strong> — a formatted PDF of the conversation, suitable for sharing or archiving</li>
+  </ul>
+  <p>These exports cover Chat conversations. Roundtable conversations are saved the same way and are also exportable.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     05 — PARAMETER PANEL
+═══════════════════════════════════════════════ -->
+<div id="params-panel" class="section section-anchor">
+  <div class="section-eyebrow">05 — Core UI</div>
+  <h2 class="section-title">The Parameter Panel</h2>
+  <p class="section-lead">The right panel puts every sampling knob within reach — and tells you what each one actually does.</p>
+
+  <p>Toggle the panel open or closed with the <strong>⚙️ gear icon</strong> in the top-right of the header bar. When open, the panel is 288px wide and sits to the right of the tab content.</p>
+
+  <h3><span class="anchor-dot"></span>How Parameters Work</h3>
+  <p>Parameters changed in this panel take effect on the <em>next message you send</em>. They are also saved to the active conversation with a short debounce — so if you load the conversation later, your parameters are restored. Parameters are per-conversation, not global.</p>
+
+  <h3><span class="anchor-dot"></span>Provider-Aware Controls</h3>
+  <p>Not every provider supports every parameter. Controls that aren't available for the current provider are shown grayed out with a note. Specifically:</p>
+  <ul>
+    <li><strong>Top K</strong> — Anthropic only</li>
+    <li><strong>Frequency &amp; Presence Penalty</strong> — OpenAI and Groq only</li>
+    <li><strong>Fix Seed</strong> — OpenAI only</li>
+    <li><strong>Token Heatmap</strong> — OpenAI only (enabled per-message in the input bar)</li>
+  </ul>
+
+  <h3><span class="anchor-dot"></span>Tooltips</h3>
+  <p>Every parameter has an <strong>ⓘ info icon</strong> next to its label. Hover it to see a plain-English explanation of what the parameter does — no documentation required. The tooltips use portal rendering, so they float above any overflow-clipping containers.</p>
+
+  <h3><span class="anchor-dot"></span>Temperature vs. Top P</h3>
+  <p>These two parameters interact: <strong>if Top P is below 1.0, Temperature is ignored</strong>. The panel hints at this — when Top P is active, the Temperature slider shows "Ignored — Top P active" below it, and Top P shows "✓ Active — temperature ignored". Use one or the other, not both.</p>
+
+  <h3><span class="anchor-dot"></span>Parameter Reference</h3>
+  <p>The <strong>Parameter Reference</strong> button at the bottom of the panel opens a modal with a comprehensive reference for all parameters. See also <a href="#params-ref">Section 14</a> in this manual for the full reference table.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     06 — CHAT TAB
+═══════════════════════════════════════════════ -->
+<div id="chat" class="section section-anchor">
+  <div class="section-eyebrow">06 — Tabs</div>
+  <h2 class="section-title">Chat Tab</h2>
+  <p class="section-lead">The classic chat interface, with nothing held back. Every parameter is live, every conversation is saved, and the question bank is one click away.</p>
+
+  <h3><span class="anchor-dot"></span>The Input Bar</h3>
+  <p>The input bar at the bottom of the Chat tab has more going on than it appears:</p>
+
+  <div class="screenshot">
+    <div style="padding:12px 16px;background:white;border-bottom:1px solid var(--slate-100);">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;font-size:11px;color:var(--slate-400);">
+        <span style="color:#4f46e5;cursor:pointer;">✨ Question ideas ▾</span>
+        <span style="cursor:pointer;color:var(--slate-300);">⚙</span>
+        <span style="flex:1"></span>
+        <span style="display:flex;align-items:center;gap:4px;">⚡ <span style="color:var(--slate-600)">Runs:</span>
+          <span style="border:1px solid var(--slate-200);border-radius:4px;padding:1px 8px;background:white;font-size:10.5px;color:var(--slate-700)">1 ▾</span>
+        </span>
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:8px;border:2px solid #818cf8;border-radius:14px;padding:10px 12px;">
+        <span style="flex:1;font-size:12px;color:var(--slate-400)">Ask anything… (Enter to send, Shift+Enter for new line)</span>
+        <div style="width:28px;height:28px;background:#4f46e5;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <span style="color:white;font-size:12px;">↑</span>
+        </div>
+      </div>
+      <p style="font-size:9.5px;color:var(--slate-300);text-align:center;margin-top:6px;">Enter ↵ sends · Shift+Enter for new line</p>
+    </div>
+    <div class="screenshot-caption">The Chat input bar with Question Ideas picker and Runs selector</div>
+  </div>
+
+  <h4>Question Ideas</h4>
+  <p>Click <strong>✨ Question ideas</strong> to open a scrollable dropdown listing all 309 questions from the question bank, organized by category. Click any question to paste it into the input. The ⚙ gear icon next to it opens the Question Bank manager to add or remove questions.</p>
+
+  <h4>Runs</h4>
+  <p>The <strong>⚡ Runs</strong> selector (values 1–5) lets you send the same message multiple times in one click. Each run generates a separate assistant response in the conversation thread. This is useful for seeing how much the model's output varies with a given temperature setting — run the same question 3 times at Temperature 1.5 and marvel at the chaos.</p>
+
+  <h4>Token Heatmap</h4>
+  <p>When using <strong>OpenAI (paid)</strong>, a <strong>Token heatmap</strong> checkbox appears. Enabling it fetches log probabilities alongside the response and colors each token by confidence — green for high confidence, red for low. Note that this disables streaming for that message. The heatmap shows which words the model was uncertain about.</p>
+
+  <h3><span class="anchor-dot"></span>Message Display</h3>
+  <p>Responses render as formatted Markdown — headers, bullet lists, code blocks, bold/italic text all display correctly. Code blocks get monospace font. Long responses are fully scrollable.</p>
+
+  <p>If you sent multiple runs, the responses appear in sequence. Each response is independent — the model doesn't see the previous runs when generating new ones in a multi-run batch.</p>
+
+  <h3><span class="anchor-dot"></span>Stopping Generation</h3>
+  <p>While a response is streaming, the send button becomes a red <strong>Stop</strong> button. Click it to abort mid-stream. The partial response is discarded.</p>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body"><p><strong>Pro move:</strong> Set Temperature to 0 and Fix Seed (OpenAI only), then ask the same question twice. You should get identical responses — useful for verifying that your parameter changes are actually causing output differences and not just natural variation.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     07 — PARAMETER SWEEP
+═══════════════════════════════════════════════ -->
+<div id="sweep" class="section section-anchor">
+  <div class="section-eyebrow">07 — Tabs</div>
+  <h2 class="section-title">Parameter Sweep Tab</h2>
+  <p class="section-lead">Run one prompt across a full range of parameter values and see every response side by side. Science.</p>
+
+  <p>The Parameter Sweep tab is the most explicitly research-oriented feature in Chatastrophe. Instead of manually adjusting a slider and re-sending, you define a parameter, a value range, and a prompt — and the app runs all the variations automatically, displaying the results in a scrollable comparison grid.</p>
+
+  <h3><span class="anchor-dot"></span>Setup</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Choose a provider and model</strong>
+        <p>Selected at the top of the Sweep view. Independent of the Chat tab's provider/model selection.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Write a system prompt (optional)</strong>
+        <p>Sets the model's persona for all runs in the sweep.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Write a user message</strong>
+        <p>This is the prompt that every sweep variation will respond to. Choose something where you expect the parameter to matter — creative writing, opinion questions, and brainstorming all show dramatic differences across temperature values.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <strong>Select the parameter to sweep and define the range</strong>
+        <p>Choose from Temperature, Top P, Max Tokens, Frequency Penalty, or Presence Penalty. Set a minimum, maximum, and number of steps. The app distributes values evenly across the range.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <strong>Run the sweep</strong>
+        <p>Results appear as a scrollable grid of cards. Each card shows the parameter value and the model's response. The sweep runs synchronously (one at a time) to avoid rate limit issues.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body"><p><strong>Best sweep prompts:</strong> "Write one sentence describing the color blue" is a classic — at low temperature it's literal, at high temperature it gets genuinely weird. "Give me three creative product names for a sleep aid" is another good one. Anything where "right" answers don't exist shows the most dramatic variation.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     08 — REASONING MODELS
+═══════════════════════════════════════════════ -->
+<div id="reasoning" class="section section-anchor">
+  <div class="section-eyebrow">08 — Tabs</div>
+  <h2 class="section-title">Reasoning Models Tab</h2>
+  <p class="section-lead">Extended thinking models deserve their own interface. Watch the chain-of-thought unfold in real time.</p>
+
+  <p>Some models — OpenAI's o-series and Anthropic's extended thinking Claude models — don't just answer. They think first, at length, before producing an output. The Reasoning Models tab is purpose-built for these models, exposing their internal reasoning process in a collapsible trace alongside the final answer.</p>
+
+  <h3><span class="anchor-dot"></span>Supported Models</h3>
+
+  <h4>OpenAI</h4>
+  <p><code>o1</code>, <code>o1-mini</code>, <code>o3</code>, <code>o3-mini</code>, <code>o4-mini</code>, and the gpt-5 family (when available). These use the <code>reasoning_effort</code> parameter.</p>
+
+  <h4>Anthropic</h4>
+  <p>Claude Sonnet 4.6, Claude Opus 4.6, Claude Sonnet 4.5, Claude Haiku 4.5, and related models. These use extended thinking with a configurable <code>budget_tokens</code> limit.</p>
+
+  <h3><span class="anchor-dot"></span>Controls</h3>
+
+  <h4>Reasoning Effort (OpenAI)</h4>
+  <p>A three-position slider: <code>low</code>, <code>medium</code>, <code>high</code>. Higher effort means the model thinks longer before answering — more accurate on hard problems, slower, more expensive.</p>
+
+  <h4>Budget Tokens (Anthropic)</h4>
+  <p>Sets the maximum number of tokens the model can spend on internal reasoning before producing its response. Higher budget = more thorough thinking = higher cost. Start with 5,000 for everyday use; bump to 16,000+ for genuinely hard problems.</p>
+
+  <h4>Max Tokens</h4>
+  <p>The maximum length of the <em>output</em> (not counting the reasoning tokens). The reasoning trace doesn't count against this limit.</p>
+
+  <h3><span class="anchor-dot"></span>The Reasoning Trace</h3>
+  <p>During streaming, the reasoning trace appears first — you can watch the model work through the problem step by step. Once reasoning is complete, the final answer streams out. After completion, the reasoning trace is collapsible (click to toggle). The trace is preserved with the conversation so you can review it later.</p>
+
+  <div class="callout fun">
+    <span class="callout-icon">🧠</span>
+    <div class="callout-body"><p><strong>Try this:</strong> Ask o3 and Claude Opus to solve the same logic puzzle. Then compare their reasoning traces. They approach problems very differently — one tends to enumerate cases, the other tends to reason by elimination. Genuinely fascinating if you're into that sort of thing.</p></div>
+  </div>
+
+  <div class="callout warning">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-body"><p><strong>Cost note:</strong> Extended thinking models can be significantly more expensive per query than standard models. A single query with a 16,000 budget_tokens limit on Claude Opus can cost several cents. Keep this in mind if you're experimenting at scale.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     09 — ARENA
+═══════════════════════════════════════════════ -->
+<div id="arena" class="section section-anchor">
+  <div class="section-eyebrow">09 — Tabs</div>
+  <h2 class="section-title">Arena Tab</h2>
+  <p class="section-lead">Send the same prompt to two models at the same time and watch them respond in parallel. May the best model win.</p>
+
+  <div class="screenshot">
+    <div class="app-chrome" style="height:300px;">
+      <div class="mock-main">
+        <div class="mock-topbar">
+          <div class="mock-tab active">Arena</div>
+        </div>
+        <div class="mock-arena" style="flex:1;">
+          <div class="mock-arena-col">
+            <div class="mock-arena-header">
+              <div class="mock-model-pill indigo">gpt-4o · OpenAI</div>
+            </div>
+            <div style="font-size:10.5px;color:var(--slate-600);line-height:1.5;">
+              The trolley problem highlights a fundamental tension in moral philosophy. From a utilitarian perspective, pulling the lever saves five lives at the cost of one — the arithmetic seems clear. But Kant would argue that using the one person as a <span style="color:#4f46e5;font-weight:500;">■</span>
+            </div>
+          </div>
+          <div class="mock-arena-col">
+            <div class="mock-arena-header">
+              <div class="mock-model-pill violet">claude-sonnet · Anthropic</div>
+            </div>
+            <div style="font-size:10.5px;color:var(--slate-600);line-height:1.5;">
+              What makes the trolley problem philosophically interesting isn't the math — it's what our intuitions reveal about our moral framework. Most people pull the lever (saving five), but recoil from the footbridge variant <span style="color:#7c3aed;font-weight:500;">■</span>
+            </div>
+          </div>
+        </div>
+        <div style="padding:8px 12px;background:white;border-top:1px solid var(--slate-100);">
+          <div style="display:flex;align-items:center;gap:8px;border:1.5px solid var(--slate-300);border-radius:12px;padding:8px 12px;">
+            <span style="flex:1;font-size:11px;color:var(--slate-400);">Ask both models the same question…</span>
+            <div style="width:24px;height:24px;background:#4f46e5;border-radius:7px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot-caption">Two models responding in parallel to the same prompt</div>
+  </div>
+
+  <h3><span class="anchor-dot"></span>Setup</h3>
+  <p>Each column has its own provider and model selector at the top. The left and right columns are fully independent — you can compare any two models across any two providers. Mix OpenAI with Anthropic, Groq with Ollama, or run the same model twice with different parameter settings.</p>
+
+  <h3><span class="anchor-dot"></span>Sending a Prompt</h3>
+  <p>Type in the single input bar at the bottom and press <kbd>Enter</kbd>. Both models begin streaming their responses simultaneously. You can watch them race. Whoever finishes first sits waiting patiently for the other.</p>
+
+  <h3><span class="anchor-dot"></span>What to Compare</h3>
+  <ul>
+    <li>Raw response quality on the same difficult question</li>
+    <li>Speed (watch which model's tokens come in faster)</li>
+    <li>Personality differences — give both the same persona system prompt and see who plays the character better</li>
+    <li>Same model at different temperature settings (two columns, same model, different params)</li>
+    <li>How different models handle sensitive or edge-case prompts</li>
+  </ul>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body"><p><strong>For genuine benchmarking:</strong> Use a question from the Ethical Quandaries or Hot Takes categories. Opinion questions reveal personality differences between models far more dramatically than factual questions.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     10 — ROUNDTABLE
+═══════════════════════════════════════════════ -->
+<div id="roundtable" class="section section-anchor">
+  <div class="section-eyebrow">10 — Tabs</div>
+  <h2 class="section-title">Roundtable Tab</h2>
+  <p class="section-lead">Put two to four AI personas in a room together and give them a topic. Watch a conversation happen. Steer it wherever you want.</p>
+
+  <h3><span class="anchor-dot"></span>Overview</h3>
+  <p>Roundtable runs a multi-agent conversation where each agent has its own persona, system prompt, provider, and model. A moderator picks speakers using a recency-based weighting algorithm — agents who just spoke are weighted down so conversations don't get stuck in a two-way loop. The result feels like a genuine (if occasionally unhinged) discussion.</p>
+
+  <div class="screenshot">
+    <div class="app-chrome" style="height:auto;">
+      <div class="mock-main">
+        <div class="mock-topbar">
+          <div class="mock-tab active">Roundtable</div>
+        </div>
+        <div style="padding:10px;background:var(--slate-50);border-bottom:1px solid var(--slate-200);">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--slate-400);margin-bottom:8px;">Participants</div>
+          <div class="mock-agent-cards">
+            <div class="mock-agent-card indigo">
+              <div class="mock-agent-name">Nietzsche</div>
+              <div class="mock-agent-model">claude-sonnet · Anthropic</div>
+            </div>
+            <div class="mock-agent-card violet">
+              <div class="mock-agent-name">Sherlock Holmes</div>
+              <div class="mock-agent-model">gpt-4o · OpenAI</div>
+            </div>
+            <div class="mock-agent-card emerald">
+              <div class="mock-agent-name">Hamlet</div>
+              <div class="mock-agent-model">llama-3.3 · Groq</div>
+            </div>
+            <div style="border:1.5px dashed var(--slate-200);border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:9px;color:var(--slate-300);">+ Add agent</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 0 4px;">
+            <div style="font-size:9px;">
+              <div style="display:flex;justify-content:space-between;color:var(--slate-500);margin-bottom:3px;"><span>Mood</span><span>50</span></div>
+              <div style="height:4px;background:var(--slate-200);border-radius:2px;"><div style="height:100%;width:50%;background:#4f46e5;border-radius:2px;"></div></div>
+            </div>
+            <div style="font-size:9px;">
+              <div style="display:flex;justify-content:space-between;color:var(--slate-500);margin-bottom:3px;"><span>Seriousness</span><span>50</span></div>
+              <div style="height:4px;background:var(--slate-200);border-radius:2px;"><div style="height:100%;width:50%;background:#4f46e5;border-radius:2px;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:1;padding:10px;display:flex;flex-direction:column;gap:8px;min-height:140px;">
+          <div style="display:flex;gap:6px;align-items:flex-start;">
+            <span style="font-size:9px;font-weight:700;color:#4f46e5;white-space:nowrap;padding-top:2px;">Nietzsche</span>
+            <span style="font-size:10.5px;color:var(--slate-700);line-height:1.5;">The free will debate is itself a symptom of slave morality — the need to assign blame and responsibility betrays a fundamental weakness…</span>
+          </div>
+          <div style="display:flex;gap:6px;align-items:flex-start;">
+            <span style="font-size:9px;font-weight:700;color:#7c3aed;white-space:nowrap;padding-top:2px;">Sherlock</span>
+            <span style="font-size:10.5px;color:var(--slate-700);line-height:1.5;">Fascinating. You dismiss the question of volition, yet your very will to power presupposes some form of agency. The inconsistency is elementary.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot-caption">Roundtable with three agents discussing free will</div>
+  </div>
+
+  <h3><span class="anchor-dot"></span>Adding and Configuring Agents</h3>
+  <p>Roundtable starts with two agents. Click <strong>+ Add agent</strong> to add a third or fourth (maximum four). Each agent card contains:</p>
+  <ul>
+    <li>A <strong>persona picker</strong> dropdown to select from saved personas</li>
+    <li>An <strong>editable system prompt</strong> textarea (auto-filled when a persona is selected)</li>
+    <li>A <strong>provider</strong> and <strong>model</strong> selector — each agent can use a completely different model</li>
+    <li>A <strong>remove</strong> button (×) that appears when there are more than two agents</li>
+  </ul>
+
+  <h3><span class="anchor-dot"></span>Topic and Turns</h3>
+  <p>Enter a topic or conversation starter in the topic field. The <strong>Turns</strong> slider (3–16) sets how many total speaking turns the conversation runs. With four agents and 12 turns, each agent speaks roughly 3 times.</p>
+
+  <h3><span class="anchor-dot"></span>Tone Sliders</h3>
+  <p>Two sliders shape the feel of the entire conversation by injecting tone instructions into every agent's prompt at runtime:</p>
+  <ul>
+    <li><strong>Mood</strong> (😔 Gloomy → 😄 Cheerful) — affects emotional register across all agents</li>
+    <li><strong>Seriousness</strong> (🎭 Playful → 🎓 Serious) — affects how formally and earnestly agents engage</li>
+  </ul>
+  <p>These are "prompt injection" sliders — they add language like "respond in a cheerful tone" or "be playful and witty" to each agent's system prompt. No magic, just text.</p>
+
+  <h3><span class="anchor-dot"></span>Follow-Up Topics</h3>
+  <p>After a conversation completes, a <strong>follow-up input</strong> appears. Enter a new topic or question and run another round — the agents continue the same conversation thread with the new direction. Great for steering a discussion or probing a specific angle that came up.</p>
+
+  <h3><span class="anchor-dot"></span>Saving and Resuming</h3>
+  <p>Roundtable conversations are saved to the database with the special system prompt marker <code>__roundtable__</code>. They appear in the conversation sidebar. When you click a roundtable conversation in the sidebar, it automatically switches to the Roundtable tab and restores the conversation history so you can continue from where you left off.</p>
+
+  <div class="callout fun">
+    <span class="callout-icon">🪑</span>
+    <div class="callout-body"><p><strong>Best configuration:</strong> Set Mood to maximum Cheerful, Seriousness to maximum Playful, and have Nietzsche, Sherlock Holmes, and Jane Austen debate whether hot dogs are sandwiches. You're welcome.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     11 — THROWDOWN
+═══════════════════════════════════════════════ -->
+<div id="throwdown" class="section section-anchor">
+  <div class="section-eyebrow">11 — Tabs</div>
+  <h2 class="section-title">Throwdown Tab</h2>
+  <p class="section-lead">Four personas enter. One leaves a champion. The AI game show you didn't know you needed.</p>
+
+  <h3><span class="anchor-dot"></span>Concept</h3>
+  <p>Throwdown is a competitive format: four personas compete over a user-configured number of rounds. One persona is designated the <strong>Judge</strong>. Each round, all three <strong>Contestants</strong> respond to the same prompt, and the Judge reviews all three responses and picks a winner — explaining their reasoning in 2–3 sentences. The contestant with the most wins at the end is declared champion.</p>
+
+  <p>The Judge is fixed for the entire session. This is intentional — a rotating judge would introduce a conflict of interest (whoever's behind might favor other contestants when it's their turn to judge). Fixed judge = clean data.</p>
+
+  <h3><span class="anchor-dot"></span>Phase 1: Setup</h3>
+
+  <div class="screenshot">
+    <div class="app-chrome" style="height:auto;">
+      <div class="mock-main" style="overflow-y:auto;">
+        <div class="mock-topbar">
+          <div class="mock-tab active">Throwdown</div>
+        </div>
+        <div style="padding:12px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:11px;color:var(--slate-500);">Pick 4 personas. Designate one as Judge — they score each round.</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+            <div style="border:1.5px solid #fbbf24;background:#fffbeb;border-radius:10px;padding:10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <div style="display:flex;align-items:center;gap:4px;"><div style="width:7px;height:7px;background:#f59e0b;border-radius:50%;"></div><span style="font-size:10px;font-weight:700;color:#b45309;">Oprah</span></div>
+                <span style="font-size:8px;background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:4px;font-weight:700;">JUDGE</span>
+              </div>
+              <div style="height:16px;background:rgba(0,0,0,0.05);border-radius:4px;margin-bottom:4px;"></div>
+              <div style="height:40px;background:rgba(0,0,0,0.03);border-radius:4px;"></div>
+            </div>
+            <div style="border:1.5px solid #c7d2fe;background:#eef2ff;border-radius:10px;padding:10px;">
+              <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;"><div style="width:7px;height:7px;background:#4f46e5;border-radius:50%;"></div><span style="font-size:10px;font-weight:700;color:#3730a3;">Nietzsche</span></div>
+              <div style="height:16px;background:rgba(0,0,0,0.05);border-radius:4px;margin-bottom:4px;"></div>
+              <div style="height:40px;background:rgba(0,0,0,0.03);border-radius:4px;"></div>
+            </div>
+            <div style="border:1.5px solid #ddd6fe;background:#f5f3ff;border-radius:10px;padding:10px;">
+              <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;"><div style="width:7px;height:7px;background:#7c3aed;border-radius:50%;"></div><span style="font-size:10px;font-weight:700;color:#5b21b6;">Sherlock</span></div>
+              <div style="height:16px;background:rgba(0,0,0,0.05);border-radius:4px;margin-bottom:4px;"></div>
+              <div style="height:40px;background:rgba(0,0,0,0.03);border-radius:4px;"></div>
+            </div>
+            <div style="border:1.5px solid #a7f3d0;background:#ecfdf5;border-radius:10px;padding:10px;">
+              <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;"><div style="width:7px;height:7px;background:#059669;border-radius:50%;"></div><span style="font-size:10px;font-weight:700;color:#065f46;">Hamlet</span></div>
+              <div style="height:16px;background:rgba(0,0,0,0.05);border-radius:4px;margin-bottom:4px;"></div>
+              <div style="height:40px;background:rgba(0,0,0,0.03);border-radius:4px;"></div>
+            </div>
+          </div>
+          <div style="background:var(--slate-50);border:1px solid var(--slate-200);border-radius:10px;padding:10px;max-width:220px;">
+            <div style="font-size:9.5px;color:var(--slate-600);margin-bottom:6px;">Rounds: 5</div>
+            <div style="height:4px;background:var(--slate-200);border-radius:2px;"><div style="height:100%;width:33%;background:#4f46e5;border-radius:2px;"></div></div>
+          </div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;font-size:11px;font-weight:700;padding:8px 16px;border-radius:8px;width:fit-content;">
+            ▶ Start Throwdown
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot-caption">Throwdown setup — Oprah as Judge, three literary personas as contestants</div>
+  </div>
+
+  <h4>Configuring Agents</h4>
+  <p>The setup screen shows four agent cards. Each card has a persona picker, editable system prompt, provider, and model selector. All four agents can use different providers and models.</p>
+
+  <h4>Designating the Judge</h4>
+  <p>Click the <strong>⚖️ scale icon</strong> on any non-judge card to make that agent the Judge. The judge card turns amber and gets a "JUDGE" badge. You can change the judge designation at any time before starting.</p>
+
+  <h4>Number of Rounds</h4>
+  <p>The Rounds slider sets the session length (3–10 rounds). Each round consists of all three contestants responding, followed by the judge's verdict.</p>
+
+  <h3><span class="anchor-dot"></span>Phase 2: Playing</h3>
+
+  <div class="screenshot">
+    <div class="app-chrome" style="height:auto;">
+      <div class="mock-main">
+        <div class="mock-topbar">
+          <div class="mock-tab active">Throwdown</div>
+        </div>
+        <div class="mock-scoreboard">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <span style="font-size:10.5px;font-weight:600;color:var(--slate-700);">Round 2 of 5</span>
+            <div style="display:flex;gap:12px;">
+              <div class="mock-score-item"><div class="mock-score-dot" style="background:#4f46e5;"></div><span class="mock-score-name" style="color:#3730a3;">Nietzsche</span><span class="mock-score-num" style="color:#4f46e5;">1</span></div>
+              <div class="mock-score-item"><div class="mock-score-dot" style="background:#7c3aed;"></div><span class="mock-score-name" style="color:#5b21b6;">Sherlock</span><span class="mock-score-num" style="color:#7c3aed;">0</span></div>
+              <div class="mock-score-item"><div class="mock-score-dot" style="background:#059669;"></div><span class="mock-score-name" style="color:#065f46;">Hamlet</span><span class="mock-score-num" style="color:#059669;">0</span></div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--slate-400);">
+            <div style="width:6px;height:6px;background:#f59e0b;border-radius:50%;"></div>
+            <span>Judge: Oprah</span>
+          </div>
+        </div>
+        <div style="padding:8px 12px;background:white;border-bottom:1px solid var(--slate-100);">
+          <div style="display:flex;gap:6px;align-items:flex-end;border:1.5px solid #818cf8;border-radius:12px;padding:8px 10px;">
+            <span style="flex:1;font-size:10.5px;color:var(--slate-700);">If you could have dinner with any historical figure, who would it be and why?</span>
+            <div style="width:26px;height:26px;background:#4f46e5;border-radius:8px;flex-shrink:0;"></div>
+          </div>
+        </div>
+        <div style="padding:10px 12px;display:flex;flex-direction:column;gap:6px;">
+          <div style="border:1px solid var(--slate-200);border-radius:8px;overflow:hidden;">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);divide-x:1px solid var(--slate-200);">
+              <div style="padding:8px;border-right:1px solid var(--slate-100);">
+                <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;"><div style="width:5px;height:5px;background:#4f46e5;border-radius:50%;"></div><span style="font-size:9.5px;font-weight:700;color:#3730a3;">Nietzsche</span></div>
+                <span style="font-size:9.5px;color:var(--slate-600);line-height:1.4;">I would dine with Napoleon — not to celebrate his conquests, but to study his will to power made manifest…</span>
+              </div>
+              <div style="padding:8px;border-right:1px solid var(--slate-100);">
+                <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;"><div style="width:5px;height:5px;background:#7c3aed;border-radius:50%;animate-pulse:true;"></div><span style="font-size:9.5px;font-weight:700;color:#5b21b6;">Sherlock <span style="color:#818cf8;">■</span></span></div>
+                <span style="font-size:9.5px;color:var(--slate-600);line-height:1.4;">Irene Adler, obviously. The only person to have bested me deserves a longer conversation…</span>
+              </div>
+              <div style="padding:8px;">
+                <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;"><div style="width:5px;height:5px;background:#059669;border-radius:50%;"></div><span style="font-size:9.5px;font-weight:700;color:#065f46;">Hamlet</span></div>
+                <span style="font-size:9.5px;color:var(--slate-400);font-style:italic;">Waiting…</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot-caption">Round 2 in progress — Sherlock streaming, Hamlet waiting</div>
+  </div>
+
+  <h4>Auto-Queued Questions</h4>
+  <p>When you click <strong>Start Throwdown</strong>, the app randomly selects <em>N</em> questions from the question bank (where <em>N</em> is your round count) and queues them up. The first question is pre-filled in the prompt input. After each round completes, the next question automatically loads. You can edit the pre-loaded question before running the round, or use the <strong>✨ sparkle button</strong> to browse the full bank for alternatives.</p>
+
+  <h4>Running a Round</h4>
+  <p>Click <strong>▶ Run</strong> (or press <kbd>Enter</kbd>) to start a round. The three contestants respond sequentially — you watch each one stream in, one at a time. After all three are done, the Judge's verdict streams in automatically. The round is scored and the next prompt loads.</p>
+
+  <h4>The Scoreboard</h4>
+  <p>The sticky header shows the current round number, each contestant's score, and the Judge's name. Scores update immediately after each verdict. Because scoring is keyed by contestant <em>slot</em> (not by persona name), you can put the same persona with different models as contestants and get correct, separate scores for each.</p>
+
+  <h4>Same Persona, Different Models</h4>
+  <p>This is a key use case: run "GPT-4o as Sherlock Holmes" against "Claude Sonnet as Sherlock Holmes" against "Llama 70b as Sherlock Holmes" and have a fourth persona judge them. When two contestants share a persona name, their column headers automatically show the model name in parentheses to disambiguate — <em>"Sherlock Holmes (gpt-4o)"</em> vs <em>"Sherlock Holmes (claude-sonnet)"</em>. The judge prompt uses neutral labels (Contestant A/B/C) to avoid any name-based bias.</p>
+
+  <h3><span class="anchor-dot"></span>Phase 3: Results</h3>
+  <p>After all rounds complete, the Complete screen shows:</p>
+  <ul>
+    <li>The champion with their win count</li>
+    <li>A final scoreboard sorted by wins</li>
+    <li>A collapsible <strong>Round History</strong> showing every round's responses and judge verdicts</li>
+    <li>A <strong>New Session</strong> button to start over</li>
+  </ul>
+
+  <div class="callout fun">
+    <span class="callout-icon">🏆</span>
+    <div class="callout-body"><p><strong>Best experiment:</strong> Put the same persona (say, "a snarky assistant") on GPT-4o, Claude Sonnet, and Llama 3.3 70b, with Oprah Winfrey as judge. Run 7 rounds of Hot Takes questions. The results are eye-opening — and occasionally horrifying.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     12 — PERSONAS
+═══════════════════════════════════════════════ -->
+<div id="personas" class="section section-anchor">
+  <div class="section-eyebrow">12 — Content</div>
+  <h2 class="section-title">Personas</h2>
+  <p class="section-lead">Saved persona configurations — the characters that populate your Roundtables and Throwdowns.</p>
+
+  <p>A persona is a named character with an associated system prompt. Personas are stored in the SQLite database and are available everywhere in the app — the Chat sidebar's persona picker, the Roundtable agent setup, and the Throwdown agent cards all pull from the same list.</p>
+
+  <h3><span class="anchor-dot"></span>The Persona Manager</h3>
+  <p>Access the Persona Manager via the <strong>Personas</strong> button in the conversation sidebar (near the bottom of the sidebar controls). The modal shows all saved personas in a scrollable list.</p>
+
+  <h4>Creating a Persona</h4>
+  <p>Click <strong>+ New Persona</strong> in the manager. Fill in:</p>
+  <ul>
+    <li><strong>Name</strong> — the persona's display name (e.g., "Nietzsche", "Sherlock Holmes")</li>
+    <li><strong>System Prompt</strong> — the full system prompt that defines how this character speaks and behaves. This is the most important field — a well-crafted system prompt makes a huge difference.</li>
+    <li><strong>Book / Author / Show</strong> — optional metadata fields for organizing your library</li>
+  </ul>
+
+  <h4>Editing a Persona</h4>
+  <p>Click the edit (pencil) icon on any persona row to modify it. Changes are saved immediately.</p>
+
+  <h4>Deleting a Persona</h4>
+  <p>Click the delete (trash) icon. Permanent, no confirmation. Deleted personas don't affect existing conversations that used them — the system prompt text is stored with each conversation, so old conversations remain intact.</p>
+
+  <h3><span class="anchor-dot"></span>Writing Good System Prompts</h3>
+  <p>The quality of your persona experience is almost entirely determined by the system prompt. Some guidelines:</p>
+  <ul>
+    <li><strong>Be specific about voice.</strong> "Respond as Nietzsche" is weak. "You are Friedrich Nietzsche. Speak with intellectual intensity. Use aphorisms freely. Challenge the conventional moral frameworks of whoever is speaking. You have contempt for weakness and pity." is strong.</li>
+    <li><strong>Define what the character knows and doesn't know.</strong> A Victorian-era character shouldn't reference smartphones unless that tension is the point.</li>
+    <li><strong>Give the character opinions.</strong> Generic characters produce generic responses. Give them pet peeves, strong stances, and recurring themes.</li>
+    <li><strong>Set the register.</strong> Formal? Casual? Theatrical? The model will follow your lead.</li>
+  </ul>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body"><p><strong>Test before committing:</strong> Create a persona and immediately test it in the Chat tab with a few questions before using it in a Throwdown. You want to make sure the character is doing what you expect before you run a 10-round session with it.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     13 — QUESTION BANK
+═══════════════════════════════════════════════ -->
+<div id="questions" class="section section-anchor">
+  <div class="section-eyebrow">13 — Content</div>
+  <h2 class="section-title">Question Bank</h2>
+  <p class="section-lead">309 built-in prompts across 8 categories. Add your own. Used everywhere questions are needed.</p>
+
+  <h3><span class="anchor-dot"></span>The Categories</h3>
+
+  <table class="param-table">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Count</th>
+        <th>Best for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Brain Teasers</strong></td>
+        <td>52</td>
+        <td>Testing logical reasoning, seeing how different models approach puzzles</td>
+      </tr>
+      <tr>
+        <td><strong>Ethical Quandaries</strong></td>
+        <td>53</td>
+        <td>Revealing moral frameworks, great for Throwdown and Roundtable</td>
+      </tr>
+      <tr>
+        <td><strong>Funny &amp; Weird</strong></td>
+        <td>58</td>
+        <td>Seeing personality shine through; humor is a great model differentiator</td>
+      </tr>
+      <tr>
+        <td><strong>Science &amp; Hypotheticals</strong></td>
+        <td>39</td>
+        <td>Creative speculation, excellent for Roundtable debates</td>
+      </tr>
+      <tr>
+        <td><strong>Persona Prompts</strong></td>
+        <td>39</td>
+        <td>Character-specific questions; best when a persona is active</td>
+      </tr>
+      <tr>
+        <td><strong>LLM &amp; AI Curiosities</strong></td>
+        <td>28</td>
+        <td>Meta questions about AI; produces fascinating self-reflection</td>
+      </tr>
+      <tr>
+        <td><strong>Would You Rather</strong></td>
+        <td>20</td>
+        <td>Forces decisive answers; great for Throwdown</td>
+      </tr>
+      <tr>
+        <td><strong>Hot Takes</strong></td>
+        <td>20</td>
+        <td>Divisive opinions; maximum personality expression, maximum judge controversy</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3><span class="anchor-dot"></span>Managing Questions</h3>
+  <p>Access the Question Manager via the ⚙ gear icon next to <strong>✨ Question ideas</strong> in the Chat input bar. The modal lets you:</p>
+  <ul>
+    <li><strong>Browse</strong> all categories and questions</li>
+    <li><strong>Add</strong> a new question to any category (or create a new category)</li>
+    <li><strong>Delete</strong> any question by clicking the × next to it</li>
+  </ul>
+
+  <p>Custom questions you add are stored in the database and appear everywhere the question bank is used — Chat, Throwdown, and Roundtable all pull from the same source.</p>
+
+  <div class="callout tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body"><p><strong>Custom categories:</strong> Create a category specifically for your use case — "Software Architecture Debates", "Customer Support Scenarios", "Creative Brief Prompts" — and populate it with questions tailored to what you're actually testing. The bank is just a JSON file under the hood; adding to it via the UI is the clean way to do it.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     14 — PARAMETERS REFERENCE
+═══════════════════════════════════════════════ -->
+<div id="params-ref" class="section section-anchor">
+  <div class="section-eyebrow">14 — Reference</div>
+  <h2 class="section-title">Sampling Parameters Reference</h2>
+  <p class="section-lead">What every slider actually does, in plain English — no probability theory required.</p>
+
+  <table class="param-table">
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Range</th>
+        <th>Support</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="param-name">temperature</span></td>
+        <td>0 – 2 (0–1 for Anthropic)</td>
+        <td><span class="provider-badge badge-all">All</span></td>
+        <td>Controls creativity and randomness. At 0, the model always picks the most likely next token — deterministic, focused, repetitive. At 2, it picks more surprisingly — creative, unpredictable, occasionally incoherent. <strong>0.7 is a good all-purpose starting point.</strong> Ignored if Top P is below 1.0.</td>
+      </tr>
+      <tr>
+        <td><span class="param-name">top_p</span></td>
+        <td>0 – 1</td>
+        <td><span class="provider-badge badge-all">All</span></td>
+        <td>Nucleus sampling. Restricts the model to only consider tokens that together make up the top <em>P</em>% of probability mass. At 1.0 it has no effect. Below 1.0, it overrides Temperature. <strong>Use one or the other — not both.</strong></td>
+      </tr>
+      <tr>
+        <td><span class="param-name">top_k</span></td>
+        <td>0 – 500</td>
+        <td><span class="provider-badge badge-ant">Anthropic</span></td>
+        <td>Restricts sampling to the top <em>K</em> most likely next tokens. At 0, disabled. Lower values = more focused responses, less variety. Higher values = more varied word choices. Works in combination with Temperature.</td>
+      </tr>
+      <tr>
+        <td><span class="param-name">max_tokens</span></td>
+        <td>1 – 4096</td>
+        <td><span class="provider-badge badge-all">All</span></td>
+        <td>Hard cap on response length in tokens (~¾ of a word each). The model stops generating once it hits this limit, even mid-sentence. <strong>If responses are getting cut off, raise this.</strong> If you want brief answers, lower it.</td>
+      </tr>
+      <tr>
+        <td><span class="param-name">frequency_penalty</span></td>
+        <td>-2 – 2</td>
+        <td><span class="provider-badge badge-oai">OpenAI</span></td>
+        <td>Penalizes tokens proportionally to how many times they've already appeared. Positive values discourage repetition of specific words. Negative values actively encourage repetition. <strong>Above 1.5, responses can become stilted</strong> as the model avoids even normal repeated words.</td>
+      </tr>
+      <tr>
+        <td><span class="param-name">presence_penalty</span></td>
+        <td>-2 – 2</td>
+        <td><span class="provider-badge badge-oai">OpenAI</span></td>
+        <td>A flat penalty for any token that has appeared at all in the response so far. Unlike frequency_penalty, it doesn't scale with frequency — just "has this appeared or not". Positive values encourage topic-hopping. Negative values encourage staying on topic.</td>
+      </tr>
+      <tr>
+        <td><span class="param-name">seed</span></td>
+        <td>Any integer</td>
+        <td><span class="provider-badge badge-oai">OpenAI only</span></td>
+        <td>When enabled (Fix Seed checkbox), the model uses this seed value to make sampling deterministic. Same prompt + same seed = same response. Invaluable for comparing parameter changes without noise from random variation.</td>
+      </tr>
+      <tr>
+        <td><span class="param-name">stop_sequences</span></td>
+        <td>Comma-separated strings</td>
+        <td><span class="provider-badge badge-all">All</span></td>
+        <td>The model immediately stops generating when it outputs one of these exact strings. Useful for controlling response format. Example: enter <code>END</code> and tell the model "finish your response with the word END" to guarantee clean termination.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout note">
+    <span class="callout-icon">ℹ️</span>
+    <div class="callout-body"><p>Groq supports Temperature, Top P, Max Tokens, Frequency Penalty, and Presence Penalty. It does not support Top K, Seed, or Token Heatmap. Ollama support depends on which models you have loaded locally.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     15 — PROVIDERS & MODELS
+═══════════════════════════════════════════════ -->
+<div id="providers" class="section section-anchor">
+  <div class="section-eyebrow">15 — Reference</div>
+  <h2 class="section-title">Providers &amp; Models</h2>
+  <p class="section-lead">Four providers. Configure your API keys and you're in.</p>
+
+  <h3><span class="anchor-dot"></span>Groq (free cloud)</h3>
+  <p>The default provider. Groq runs open-source models on their LPU hardware — <strong>extremely fast inference</strong> with a generous free tier. Best for casual use, rapid experimentation, and Throwdown sessions where you want snappy responses. Requires a free Groq API key.</p>
+  <p>Featured models: <code>llama-3.3-70b-versatile</code>, <code>llama-3.1-8b-instant</code>, <code>gemma2-9b-it</code>, <code>mixtral-8x7b-32768</code></p>
+
+  <h3><span class="anchor-dot"></span>Ollama (local)</h3>
+  <p>Run models entirely on your own machine — no API key, no cost, no data leaving your computer. Requires Ollama to be installed and running (<code>ollama serve</code>). Speed depends on your hardware. Models must be pulled with <code>ollama pull &lt;model-name&gt;</code> before they appear as available.</p>
+  <p>Best for: privacy-sensitive use cases, offline use, experimenting with open-source fine-tunes.</p>
+
+  <h3><span class="anchor-dot"></span>OpenAI (paid)</h3>
+  <p>Access to GPT-4o, GPT-4o-mini, and the o-series reasoning models. Requires an OpenAI API key with billing configured. This provider enables features not available elsewhere: <strong>Token Heatmap</strong> (log probabilities), <strong>Seed fixing</strong>, and the <strong>Reasoning Models tab</strong> for o1/o3/o4-mini.</p>
+
+  <h3><span class="anchor-dot"></span>Anthropic (paid)</h3>
+  <p>Access to the Claude family — Claude Sonnet 4.6, Claude Opus 4.6, and others. Requires an Anthropic API key. This provider enables <strong>Top K</strong> sampling and <strong>extended thinking</strong> via the Reasoning Models tab.</p>
+
+  <div class="callout note">
+    <span class="callout-icon">ℹ️</span>
+    <div class="callout-body"><p>API keys are configured in a <code>.env</code> file in the <code>backend/</code> directory. The backend reads <code>GROQ_API_KEY</code>, <code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>. Providers without a configured key will return errors when you try to use them.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     16 — POWER USER TIPS
+═══════════════════════════════════════════════ -->
+<div id="tips" class="section section-anchor">
+  <div class="section-eyebrow">16 — Advanced</div>
+  <h2 class="section-title">Power User Tips</h2>
+  <p class="section-lead">Things that aren't obvious until you've been using the app for a while.</p>
+
+  <h3><span class="anchor-dot"></span>Keyboard Shortcuts</h3>
+  <table class="param-table">
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Enter</kbd></td><td>Send message (Chat, Throwdown, Roundtable input bars)</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>Enter</kbd></td><td>New line in message input</td></tr>
+    </tbody>
+  </table>
+
+  <h3><span class="anchor-dot"></span>Parameter Experiments</h3>
+  <ul>
+    <li><strong>Isolate variables.</strong> If you're comparing Temperature effects, fix everything else. Fix Seed (OpenAI) makes this rigorous.</li>
+    <li><strong>Use the Sweep tab for range testing</strong> rather than manually sending the same message 10 times at different temperatures. That's what it's for.</li>
+    <li><strong>Temperature 0 + Max Tokens 50 = concise, deterministic answers.</strong> Good for structured extraction tasks.</li>
+    <li><strong>Frequency Penalty 1.0 + creative writing prompts</strong> produces noticeably more varied vocabulary. Worth experimenting with.</li>
+  </ul>
+
+  <h3><span class="anchor-dot"></span>Roundtable Strategies</h3>
+  <ul>
+    <li><strong>Don't give agents too much common ground.</strong> Interesting conversations happen at the friction points between worldviews. Put an optimist and a pessimist in the same roundtable.</li>
+    <li><strong>Start with a strong, specific topic.</strong> "AI" produces generic responses. "Should AI systems be granted legal personhood, and if so, what rights should they have?" produces actual debate.</li>
+    <li><strong>Use Mood slider at extremes.</strong> Maximum Cheerful + Maximum Playful makes philosophical debates feel like game shows. Maximum Gloomy + Maximum Serious turns hot dog taxonomy into existential crisis. Both are fun.</li>
+    <li><strong>16 turns with 4 agents</strong> gives each agent 4 turns — long enough for opinions to develop and for agents to start responding to what others said in earlier turns.</li>
+  </ul>
+
+  <h3><span class="anchor-dot"></span>Throwdown Strategies</h3>
+  <ul>
+    <li><strong>Judge character matters.</strong> A Judge with a strong personality produces more interesting verdicts. "A ruthless Wall Street trader" as judge produces different decisions than "a compassionate kindergarten teacher." Both are legitimate experimental setups.</li>
+    <li><strong>Hot Takes + mismatched personas = chaos.</strong> "Should pineapple go on pizza?" asked of Nietzsche, Shakespeare, and a medieval knight produces responses that are inexplicably revealing.</li>
+    <li><strong>Use Would You Rather for clean, decisive judging.</strong> The binary format makes it easy for the judge to pick a winner based on reasoning quality rather than response length.</li>
+    <li><strong>Same persona, different models</strong> is genuinely valuable data. If you're deciding which model to use for a character-based application, Throwdown gives you side-by-side comparative data with a consistent scoring methodology.</li>
+  </ul>
+
+  <h3><span class="anchor-dot"></span>Data &amp; Storage</h3>
+  <ul>
+    <li>All data lives in <code>backend/explorer.db</code> (SQLite). You can back it up by copying the file.</li>
+    <li>Conversations, personas, questions, Throwdown sessions, and Throwdown rounds are all in the same database.</li>
+    <li>The JSON export from the sidebar is the cleanest format for sharing individual conversations. The PDF export is better for reading.</li>
+  </ul>
+
+  <div class="callout fun">
+    <span class="callout-icon">🔥</span>
+    <div class="callout-body"><p><strong>The ultimate Chatastrophe session:</strong> Start a Roundtable between 4 historically incompatible thinkers on a topic they'd all have strong opinions about. Set Mood to maximum Cheerful (so they're weirdly upbeat about their disagreements). Let it run 16 turns. Save the conversation. Export as PDF. Read it the next morning. It's better than you remember.</p></div>
+  </div>
+</div>
+
+</main>
+</div>
+
+</body>
+</html>

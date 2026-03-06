@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatastrophe — Product Brochure</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --indigo: #4f46e5;
+      --violet: #7c3aed;
+      --orange: #f97316;
+      --amber: #f59e0b;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--slate-800);
+      background: white;
+      line-height: 1.6;
+    }
+
+    /* ── COVER PAGE ── */
+    .cover {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #312e81 70%, #4c1d95 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 20%, rgba(99,102,241,0.3) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 80%, rgba(167,139,250,0.2) 0%, transparent 60%);
+    }
+
+    .cover-content { position: relative; z-index: 1; max-width: 720px; }
+
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.8);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+    }
+
+    .cover-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .flame-icon {
+      width: 56px;
+      height: 56px;
+      color: #fb923c;
+      filter: drop-shadow(0 0 20px rgba(249,115,22,0.5));
+    }
+
+    .cover h1 {
+      font-size: 80px;
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, #fb923c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+    }
+
+    .cover-tagline {
+      font-size: 22px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+      max-width: 500px;
+      margin: 0 auto 48px;
+      line-height: 1.5;
+    }
+
+    .cover-tagline strong {
+      color: rgba(255,255,255,0.95);
+      font-weight: 600;
+    }
+
+    .feature-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 60px;
+    }
+
+    .pill {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+
+    .cover-footer {
+      position: absolute;
+      bottom: 40px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: rgba(255,255,255,0.3);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 80px 60px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--slate-200);
+      margin: 0 60px;
+    }
+
+    /* ── INTRO ── */
+    .intro {
+      padding: 80px 60px 60px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .intro h2 {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--slate-900);
+      margin-bottom: 20px;
+    }
+
+    .intro h2 span {
+      background: linear-gradient(135deg, var(--indigo), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .intro p {
+      font-size: 16px;
+      color: var(--slate-600);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--indigo), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--slate-400);
+      margin-top: 4px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--indigo);
+      margin-bottom: 12px;
+    }
+
+    .section-label .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--indigo);
+    }
+
+    h2.section-title {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      color: var(--slate-900);
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--slate-500);
+      max-width: 560px;
+      line-height: 1.65;
+      margin-bottom: 48px;
+    }
+
+    /* ── FEATURE CARDS ── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .feature-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 28px;
+      background: white;
+      transition: all 0.2s;
+    }
+
+    .feature-card.accent-indigo { border-top: 3px solid #4f46e5; }
+    .feature-card.accent-violet { border-top: 3px solid #7c3aed; }
+    .feature-card.accent-emerald { border-top: 3px solid #059669; }
+    .feature-card.accent-amber { border-top: 3px solid #d97706; }
+    .feature-card.accent-orange { border-top: 3px solid #ea580c; }
+    .feature-card.accent-sky { border-top: 3px solid #0284c7; }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 20px;
+    }
+
+    .icon-indigo { background: #eef2ff; }
+    .icon-violet { background: #f5f3ff; }
+    .icon-emerald { background: #ecfdf5; }
+    .icon-amber { background: #fffbeb; }
+    .icon-orange { background: #fff7ed; }
+    .icon-sky { background: #f0f9ff; }
+
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 13.5px;
+      color: var(--slate-600);
+      line-height: 1.65;
+    }
+
+    .feature-card ul {
+      margin-top: 12px;
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .feature-card ul li {
+      font-size: 13px;
+      color: var(--slate-600);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .feature-card ul li::before {
+      content: '→';
+      color: var(--indigo);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── HERO FEATURE (large card) ── */
+    .hero-feature {
+      background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95);
+      border-radius: 24px;
+      padding: 48px;
+      color: white;
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-feature h3 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+      color: white;
+    }
+
+    .hero-feature p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .hero-feature ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hero-feature ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .hero-feature ul li::before {
+      content: '✦';
+      color: #a5b4fc;
+      flex-shrink: 0;
+    }
+
+    .mock-ui {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .mock-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.12);
+      margin-bottom: 10px;
+    }
+
+    .mock-bar.wide { width: 85%; }
+    .mock-bar.mid { width: 65%; }
+    .mock-bar.short { width: 45%; }
+    .mock-bar.accent { background: linear-gradient(90deg, #818cf8, #a78bfa); width: 72%; }
+
+    .mock-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .mock-col {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 10px 8px;
+    }
+
+    .mock-col-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-bottom: 6px;
+    }
+
+    .mock-col-line {
+      height: 5px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.15);
+      margin-bottom: 4px;
+    }
+
+    /* ── QUOTE / CALLOUT ── */
+    .callout {
+      background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+      border: 1px solid #c7d2fe;
+      border-left: 4px solid var(--indigo);
+      border-radius: 0 12px 12px 0;
+      padding: 24px 28px;
+      margin: 40px 0;
+    }
+
+    .callout p {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--slate-700);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* ── USE CASE SECTION ── */
+    .use-case-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .use-case-card {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .use-case-number {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--slate-400);
+      margin-bottom: 10px;
+    }
+
+    .use-case-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .use-case-card p {
+      font-size: 13.5px;
+      color: var(--slate-600);
+      line-height: 1.65;
+    }
+
+    /* ── BACK COVER ── */
+    .back-cover {
+      min-height: 100vh;
+      background: var(--slate-900);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 40px;
+      page-break-before: always;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .back-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(79,70,229,0.15) 0%, transparent 70%);
+    }
+
+    .back-cover-content { position: relative; z-index: 1; max-width: 600px; }
+
+    .back-cover h2 {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .back-cover h2 span {
+      background: linear-gradient(135deg, #818cf8, #fb923c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .back-cover p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+      margin-bottom: 48px;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+
+    .tech-tag {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 8px;
+    }
+
+    .back-footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 32px;
+      color: rgba(255,255,255,0.25);
+      font-size: 12px;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      @page { size: A4; margin: 0; }
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .cover { page-break-after: always; }
+      .page-break { page-break-before: always; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     COVER
+════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-content">
+    <div class="cover-badge">
+      <span>Product Overview</span>
+    </div>
+
+    <div class="cover-logo">
+      <svg class="flame-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C12 2 8 6 8 10c0 1.5.5 2.9 1.4 4C8.5 13.1 8 11.6 8 10c0 0-4 3-4 7a8 8 0 0 0 16 0c0-5-4-9-4-9s0 3-2 4c0 0 2-6-2-10z"/>
+      </svg>
+    </div>
+
+    <h1>Chatastrophe</h1>
+
+    <p class="cover-tagline">
+      The <strong>multi-model playground</strong> for people who want to push AI past its polite defaults — and watch what happens.
+    </p>
+
+    <div class="feature-pills">
+      <span class="pill">Chat &amp; Sampling</span>
+      <span class="pill">Parameter Sweep</span>
+      <span class="pill">Reasoning Models</span>
+      <span class="pill">Head-to-Head Arena</span>
+      <span class="pill">Roundtable</span>
+      <span class="pill">Throwdown</span>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    Chatastrophe &nbsp;·&nbsp; Built for researchers, developers, and the deeply curious
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     INTRO
+════════════════════════════════════════════════════════ -->
+<div class="intro">
+  <div class="intro-grid">
+    <div>
+      <div class="section-label"><span class="dot"></span> What is Chatastrophe?</div>
+      <h2>Six tools.<br /><span>One playground.</span></h2>
+      <p>
+        Chatastrophe is a local web application that puts every dimension of LLM behavior under your control. Compare models, test personas, probe reasoning, tune parameters — all from a single interface that doesn't apologize for being opinionated.
+      </p>
+      <p>
+        Whether you're a researcher running systematic experiments, a developer benchmarking model choices, or just someone who wants to watch two AI characters argue about philosophy — Chatastrophe was built for you.
+      </p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="stat-number">6</span>
+        <span class="stat-label">Distinct Modes</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">4</span>
+        <span class="stat-label">AI Providers</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">300+</span>
+        <span class="stat-label">Built-in Prompts</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">∞</span>
+        <span class="stat-label">Custom Personas</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider" />
+
+
+<!-- ════════════════════════════════════════════════════════
+     FEATURES
+════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label"><span class="dot"></span> Core Features</div>
+  <h2 class="section-title">Every way to talk to an AI.</h2>
+  <p class="section-subtitle">
+    Six purpose-built tabs, each designed to reveal something different about how language models think — and how they compare.
+  </p>
+
+  <!-- Chat -->
+  <div class="hero-feature">
+    <div>
+      <h3>Chat — With Full Control</h3>
+      <p>
+        A clean chat interface with nothing held back. Every sampling parameter is exposed and adjustable in real time. See how the same question produces radically different answers when you dial up temperature or constrain output length.
+      </p>
+      <ul>
+        <li>Persistent conversation history with full search</li>
+        <li>Run the same prompt multiple times to compare outputs in the same thread</li>
+        <li>Log probabilities visualization — see token-level model confidence</li>
+        <li>Assign any custom persona via a rich system prompt</li>
+        <li>Works with OpenAI, Anthropic, Groq, and local Ollama models</li>
+      </ul>
+    </div>
+    <div class="mock-ui">
+      <div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:12px;margin-bottom:10px;">
+        <div class="mock-bar short" style="background:rgba(255,255,255,0.25);margin-bottom:6px;"></div>
+        <div class="mock-bar mid"></div>
+        <div class="mock-bar wide"></div>
+        <div class="mock-bar short"></div>
+      </div>
+      <div style="background:rgba(129,140,248,0.2);border:1px solid rgba(129,140,248,0.3);border-radius:8px;padding:12px;margin-bottom:10px;">
+        <div class="mock-bar accent"></div>
+        <div class="mock-bar mid" style="background:rgba(167,139,250,0.3);width:55%;"></div>
+        <div class="mock-bar wide" style="background:rgba(167,139,250,0.25);"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:14px;">
+        <div style="flex:1;height:36px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:8px;"></div>
+        <div style="width:64px;height:36px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3-col cards -->
+  <div class="feature-grid">
+    <div class="feature-card accent-indigo">
+      <div class="feature-icon icon-indigo">📊</div>
+      <h3>Parameter Sweep</h3>
+      <p>Run the same prompt across a range of parameter values automatically. Visualize how temperature, top-p, or penalties change output quality and creativity across the full spectrum.</p>
+      <ul>
+        <li>Pick any parameter to sweep</li>
+        <li>Set a range and step size</li>
+        <li>Compare all results in a scrollable grid</li>
+      </ul>
+    </div>
+
+    <div class="feature-card accent-violet">
+      <div class="feature-icon icon-violet">🧠</div>
+      <h3>Reasoning Models</h3>
+      <p>Built specifically for extended-thinking models. Watch the chain-of-thought unfold in real time — both the visible reasoning trace and the final answer stream simultaneously.</p>
+      <ul>
+        <li>Supports o1, o3, and Claude extended thinking</li>
+        <li>Control reasoning effort and budget tokens</li>
+        <li>Expandable thinking trace per response</li>
+      </ul>
+    </div>
+
+    <div class="feature-card accent-sky">
+      <div class="feature-icon icon-sky">⚔️</div>
+      <h3>Arena</h3>
+      <p>Send the same prompt to two different models simultaneously and watch them respond side by side. No waiting, no switching tabs — pure parallel comparison in real time.</p>
+      <ul>
+        <li>Any two models, any two providers</li>
+        <li>Responses stream in parallel</li>
+        <li>Ideal for capability benchmarking</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider" />
+
+
+<!-- ════════════════════════════════════════════════════════
+     ROUNDTABLE + THROWDOWN
+════════════════════════════════════════════════════════ -->
+<div class="section page-break">
+  <div class="section-label"><span class="dot"></span> Multi-Persona Modes</div>
+  <h2 class="section-title">Put AI characters in a room together.</h2>
+  <p class="section-subtitle">
+    Chatastrophe's most unique features: multi-agent conversations and competitive scoring. These aren't chatbots — they're personalities with opinions.
+  </p>
+
+  <div class="feature-grid-2">
+    <div class="feature-card accent-emerald" style="padding:36px;">
+      <div class="feature-icon icon-emerald" style="width:48px;height:48px;font-size:24px;">🪑</div>
+      <h3 style="font-size:20px;margin-bottom:12px;">Roundtable</h3>
+      <p style="margin-bottom:16px;">
+        Assemble up to four AI personas and give them a topic to discuss. Each agent has its own identity, model, and system prompt. They take turns responding to each other in a rolling conversation you can steer and extend.
+      </p>
+      <ul>
+        <li>Mix models and providers across agents</li>
+        <li>Tone sliders: Mood and Seriousness shape how the whole conversation feels</li>
+        <li>Continue with follow-up topics after the initial discussion</li>
+        <li>Conversations are saved and resumable from the sidebar</li>
+        <li>Export to PDF or JSON for sharing and archiving</li>
+        <li>Smart speaker selection — avoids back-to-back repetition for natural flow</li>
+      </ul>
+    </div>
+
+    <div class="feature-card accent-amber" style="padding:36px;">
+      <div class="feature-icon icon-amber" style="width:48px;height:48px;font-size:24px;">🏆</div>
+      <h3 style="font-size:20px;margin-bottom:12px;">Throwdown</h3>
+      <p style="margin-bottom:16px;">
+        The AI game show. Pick four personas: one is the Judge, three are Contestants. Each round, all three answer the same prompt and the Judge decides who gave the best response. Points accumulate over multiple rounds until a champion is crowned.
+      </p>
+      <ul>
+        <li>Judge is fixed per session — for unbiased, consistent scoring</li>
+        <li>300+ built-in questions across 10 categories, auto-queued at session start</li>
+        <li>Live streaming responses — watch all three contestants answer at once</li>
+        <li>Real-time scoreboard throughout the competition</li>
+        <li>Full round history with judge reasoning preserved</li>
+        <li>Supports same persona with different models as contestants</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>"Throw GPT-4o, Claude Sonnet, and Llama 70B into a Throwdown with the same character prompt — and a fourth persona as Judge. Watch who wins at improv comedy, philosophy, and hot takes. The results will surprise you."</p>
+  </div>
+</div>
+
+<hr class="section-divider" />
+
+
+<!-- ════════════════════════════════════════════════════════
+     PERSONAS + QUESTIONS
+════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label"><span class="dot"></span> Content System</div>
+  <h2 class="section-title">Built-in content. Fully extensible.</h2>
+  <p class="section-subtitle">
+    Chatastrophe ships with a rich library of personas and prompts out of the box — and makes it trivially easy to add your own.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card accent-violet">
+      <div class="feature-icon icon-violet">🎭</div>
+      <h3>Persona Library</h3>
+      <p>A curated set of literary and fictional characters, each with a carefully crafted system prompt that captures their voice, worldview, and speech patterns.</p>
+      <ul>
+        <li>Classic literary figures</li>
+        <li>Historical and philosophical voices</li>
+        <li>Create and save your own personas</li>
+        <li>Full system prompt editing per-character</li>
+      </ul>
+    </div>
+
+    <div class="feature-card accent-orange">
+      <div class="feature-icon icon-orange">💬</div>
+      <h3>Question Bank</h3>
+      <p>Over 300 built-in prompts across 10 categories, tuned to surface interesting, opinionated, and sometimes chaotic responses from AI personas.</p>
+      <ul>
+        <li>Brain Teasers &amp; Ethical Quandaries</li>
+        <li>Funny &amp; Weird and Science Hypotheticals</li>
+        <li>Would You Rather &amp; Hot Takes</li>
+        <li>Persona Prompts &amp; LLM Curiosities</li>
+      </ul>
+    </div>
+
+    <div class="feature-card accent-indigo">
+      <div class="feature-icon icon-indigo">⚙️</div>
+      <h3>Sampling Parameters</h3>
+      <p>Every parameter exposed with plain-English tooltips explaining what it actually does to the output — no docs required.</p>
+      <ul>
+        <li>Temperature, Top-P, Top-K</li>
+        <li>Max tokens, Frequency &amp; Presence penalties</li>
+        <li>Seed locking for reproducibility</li>
+        <li>Stop sequences</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider" />
+
+
+<!-- ════════════════════════════════════════════════════════
+     USE CASES
+════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label"><span class="dot"></span> Use Cases</div>
+  <h2 class="section-title">Who's it for?</h2>
+  <p class="section-subtitle">
+    Chatastrophe was built for people who want more than a chatbox. Here's who it's already for.
+  </p>
+
+  <div class="use-case-grid">
+    <div class="use-case-card">
+      <div class="use-case-number">01 &nbsp;·&nbsp; Researchers</div>
+      <h3>Systematic Model Evaluation</h3>
+      <p>Run controlled parameter sweeps, fix seeds for reproducibility, and compare outputs across providers with identical prompts. Get real data, not anecdotes.</p>
+    </div>
+
+    <div class="use-case-card">
+      <div class="use-case-number">02 &nbsp;·&nbsp; Developers</div>
+      <h3>Model Selection &amp; Benchmarking</h3>
+      <p>Throw the Arena at your actual use-case prompts. See which model gives better outputs for your specific task before committing to an API contract.</p>
+    </div>
+
+    <div class="use-case-card">
+      <div class="use-case-number">03 &nbsp;·&nbsp; Educators</div>
+      <h3>Teaching LLM Behavior</h3>
+      <p>Show students exactly how temperature changes creativity, how top-p affects diversity, and how the same persona prompt produces wildly different characters across models.</p>
+    </div>
+
+    <div class="use-case-card">
+      <div class="use-case-number">04 &nbsp;·&nbsp; Writers &amp; Creatives</div>
+      <h3>Character Workshopping</h3>
+      <p>Use Roundtable to generate dialogue between characters at different tones and moods. Use Throwdown to find which model brings a character to life most vividly.</p>
+    </div>
+
+    <div class="use-case-card">
+      <div class="use-case-number">05 &nbsp;·&nbsp; Prompt Engineers</div>
+      <h3>System Prompt Testing</h3>
+      <p>Craft a persona, tune its system prompt, then run it through Throwdown against competing approaches to see which formulation wins on real prompts under judge scrutiny.</p>
+    </div>
+
+    <div class="use-case-card">
+      <div class="use-case-number">06 &nbsp;·&nbsp; The Curious</div>
+      <h3>Just Seeing What Happens</h3>
+      <p>Set Nietzsche, Sherlock Holmes, and a snarky chatbot against each other on "What is the meaning of a sandwich?" — and let an AI version of Oprah decide the winner.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     BACK COVER
+════════════════════════════════════════════════════════ -->
+<div class="back-cover">
+  <div class="back-cover-content">
+    <div class="cover-badge" style="margin-bottom:32px;">
+      <span>Built Locally. Runs Anywhere.</span>
+    </div>
+
+    <h2>Fire it up.<br /><span>Cause some chaos.</span></h2>
+    <p>
+      Chatastrophe runs entirely on your machine. Your conversations, your personas, your experiments — all stored locally. No cloud accounts, no usage dashboards, no data leaving your environment.
+    </p>
+
+    <div class="tech-stack">
+      <span class="tech-tag">FastAPI</span>
+      <span class="tech-tag">React + TypeScript</span>
+      <span class="tech-tag">SQLite</span>
+      <span class="tech-tag">Vite + Tailwind</span>
+      <span class="tech-tag">OpenAI API</span>
+      <span class="tech-tag">Anthropic API</span>
+      <span class="tech-tag">Groq API</span>
+      <span class="tech-tag">Ollama (local)</span>
+    </div>
+
+    <div class="back-footer">
+      Chatastrophe &nbsp;·&nbsp; week2/explorer &nbsp;·&nbsp; All conversations stored locally in SQLite
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
