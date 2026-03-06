@@ -117,10 +117,7 @@ export default function SweepView({ meta, defaultProvider, defaultModel, default
       <div>
         <div className="flex items-center justify-between mb-1">
           <label className="text-xs font-medium text-slate-600">System Prompt</label>
-          <PersonaPicker
-            onSelect={prompt => setSystemPrompt(prompt)}
-            className="text-slate-400 hover:text-indigo-600"
-          />
+          <PersonaPicker onSelect={prompt => setSystemPrompt(prompt)} />
         </div>
         <textarea
           value={systemPrompt}

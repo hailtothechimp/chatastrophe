@@ -12,7 +12,7 @@ import LoginPage from './components/LoginPage'
 import { getMeta, getConversation, updateConversation, authMe, authLogout } from './api'
 import type { AppView, Conversation, MetaInfo, SamplingParams } from './types'
 import { DEFAULT_PARAMS } from './types'
-import { Flame, Settings2, LogOut, MessageSquare, SlidersHorizontal, Brain, Swords, Users, Trophy, ShieldCheck } from 'lucide-react'
+import { Flame, Settings2, LogOut, MessageSquare, SlidersHorizontal, Brain, Swords, Users, Trophy, ShieldCheck, PanelLeft } from 'lucide-react'
 import ThemeToggle from './components/ThemeToggle'
 import UserManager from './components/UserManager'
 
@@ -26,6 +26,7 @@ export default function App() {
   const [conversation, setConversation] = useState<Conversation | null>(null)
   const [view, setView] = useState<AppView>('chat')
   const [sidebarRefreshKey, setSidebarRefreshKey] = useState(0)
+  const [leftSidebarOpen, setLeftSidebarOpen] = useState(true)
   const [rightPanelOpen, setRightPanelOpen] = useState(true)
   const [roundtableConv, setRoundtableConv] = useState<Conversation | null>(null)
 
@@ -143,7 +144,7 @@ export default function App() {
   return (
     <div className="flex h-screen bg-[var(--main-bg)] overflow-hidden font-sans">
       {/* ── Left sidebar ─────────────────────────────────────────── */}
-      <ConversationSidebar
+      {leftSidebarOpen && <ConversationSidebar
         activeId={activeConvId}
         refreshKey={sidebarRefreshKey}
         provider={provider}
@@ -158,12 +159,21 @@ export default function App() {
         onModelChange={handleModelChange}
         onSystemPromptChange={setSystemPrompt}
         onConversationUpdated={handleMessagesUpdated}
-      />
+      />}
 
       {/* ── Main area ─────────────────────────────────────────────── */}
       <div className="flex flex-col flex-1 min-w-0">
         {/* Top nav bar */}
         <header className="flex items-center gap-2 px-4 py-2 border-b border-[var(--header-border)] bg-[var(--header-bg)] z-10 shrink-0">
+          <button
+            onClick={() => setLeftSidebarOpen(o => !o)}
+            className={`p-1.5 rounded-md transition-colors ${
+              leftSidebarOpen ? 'bg-[var(--accent-light)] text-[var(--accent-text)]' : 'text-[var(--text-muted)] hover:bg-[var(--surface)]'
+            }`}
+            title="Toggle conversation sidebar"
+          >
+            <PanelLeft size={16} />
+          </button>
           <Flame size={18} className="text-orange-500" />
           <span className="font-semibold text-[var(--text-primary)] text-sm mr-4">Chatastrophe</span>
           <div className="flex gap-1">

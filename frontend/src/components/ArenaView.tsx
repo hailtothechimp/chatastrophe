@@ -228,8 +228,10 @@ export default function ArenaView({ meta }: Props) {
                 className="w-full text-xs px-1.5 py-1 border border-slate-200 rounded bg-white text-slate-700 outline-none focus:ring-1 focus:ring-indigo-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <option value="">— Choose persona —</option>
-                {personas.map(p => (
-                  <option key={p.persona} value={p.persona}>{p.persona}{p.author ? ` (${p.author})` : ''}</option>
+                {[...personas].sort((a, b) => a.persona.localeCompare(b.persona)).map(p => (
+                  <option key={p.persona} value={p.persona}>
+                    {p.persona}{p.author ? ` (${p.book} — ${p.author.split(' ').at(-1)})` : p.show ? ` (${p.show})` : ''}
+                  </option>
                 ))}
               </select>
 

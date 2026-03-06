@@ -343,8 +343,10 @@ export default function ThrowdownView({ meta }: Props) {
                   className="w-full px-2 py-1 text-xs rounded-lg border border-slate-300 bg-white outline-none focus:ring-1 focus:ring-indigo-400"
                 >
                   <option value="">— Pick a persona —</option>
-                  {personas.map(p => (
-                    <option key={p.persona} value={p.persona}>{p.persona}</option>
+                  {[...personas].sort((a, b) => a.persona.localeCompare(b.persona)).map(p => (
+                    <option key={p.persona} value={p.persona}>
+                      {p.persona}{p.author ? ` (${p.book} — ${p.author.split(' ').at(-1)})` : p.show ? ` (${p.show})` : ''}
+                    </option>
                   ))}
                 </select>
 

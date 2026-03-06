@@ -52,7 +52,7 @@ def _decode_token(token: str) -> dict | None:
         return None
 
 # Reverse map: system_prompt → persona name
-_PERSONAS_FILE = Path(__file__).parent.parent.parent / "all_personas_merged_deduped.json"
+_PERSONAS_FILE = Path(__file__).parent.parent.parent / "llm_engineering" / "week2" / "all_personas_merged_deduped.json"
 _PERSONA_MAP: dict[str, str] = {}
 
 def _reload_persona_map() -> None:
@@ -889,6 +889,8 @@ async def delete_question_endpoint(category: str, idx: int):
 
 @app.get("/api/personas")
 async def get_personas():
+    if not _PERSONAS_FILE.exists():
+        return []
     with open(_PERSONAS_FILE, encoding="utf-8") as f:
         return json.load(f)
 

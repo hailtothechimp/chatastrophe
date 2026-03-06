@@ -211,10 +211,7 @@ export default function ReasoningView({
       <div>
         <div className="flex items-center justify-between mb-1">
           <label className="block text-xs font-medium text-slate-600">System Prompt</label>
-          <PersonaPicker
-            onSelect={setSystemPrompt}
-            className="text-slate-500 hover:text-slate-800"
-          />
+          <PersonaPicker onSelect={setSystemPrompt} />
         </div>
         <textarea
           value={systemPrompt}
