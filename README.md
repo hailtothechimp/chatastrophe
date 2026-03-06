@@ -54,6 +54,16 @@ python create_user.py <username> <password>
 
 For example: `python create_user.py alice mypassword123`
 
+### 4a. Grant admin access
+
+Admins can create and manage other user accounts from within the app. To make a user an admin, add their username to the `.env` file:
+
+```
+ADMIN_USERS=alice
+```
+
+Comma-separate multiple usernames: `ADMIN_USERS=alice,bob`. The promotion happens automatically when the backend starts.
+
 ### 5. Start the backend
 
 ```bash
